@@ -117,7 +117,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
       pathname: REPOSITORIES_PATHNAME,
       search: prepareSearchParams({
         repositorySearchValue: repositorySearchParams,
-        userLogin: user ? user.value : null,
+        userLogin: user ? user.value : '',
         page: pageParams,
         rowsPerPage: rowsPerPageParams,
       }),
