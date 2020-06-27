@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 
 import { Home } from './pages/home';
 
-const App = () => (
+export const App = () => (
   <Router>
     <Switch>
       <Route exact component={Home} path="/repositories" />
@@ -11,5 +11,3 @@ const App = () => (
     </Switch>
   </Router>
 );
-
-export default App;
