@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, ChangeEvent } from 'react';
+import React, { useState, useCallback, useMemo, ChangeEvent, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash/debounce';
 import { RouteComponentProps } from 'react-router-dom';
@@ -42,6 +42,12 @@ export const Home: React.SFC<Props> = ({ history }) => {
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
     variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 10 },
   });
+
+  useEffect(() => {
+    if (repositorySearchParams || userLoginParams) {
+      getRepositories({ variables: { queryString: `name:${repositorySearchParams}`, repositoryItemsCount: 10 } });
+    }
+  }, [getRepositories]);
 
   const searchUserValue = userSearchValue || userLoginParams;
 
