@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, KeyboardEvent } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -36,11 +36,24 @@ interface Props {
   handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void;
   loading: boolean;
   value: string | undefined;
+  debouncedSubmitInputSearch: {
+    flush(value: string | undefined): void;
+  };
 }
 
 export const RepositoriesSearchInput = (props: Props) => {
-  const { handleSearchInputChange, loading, value } = props;
+  const { handleSearchInputChange, debouncedSubmitInputSearch, loading, value } = props;
   const classes = useStyles();
+
+  const submitSearch = () => {
+    debouncedSubmitInputSearch.flush(value);
+  };
+
+  const handleEnterKeyPress = (event: KeyboardEvent) => {
+    if (event.keyCode === 13) {
+      debouncedSubmitInputSearch.flush(value);
+    }
+  };
 
   return (
     <Paper className={classes.root}>
@@ -48,6 +61,7 @@ export const RepositoriesSearchInput = (props: Props) => {
         value={value}
         onChange={handleSearchInputChange}
         className={classes.input}
+        onKeyDown={handleEnterKeyPress}
         placeholder="Search for repository name"
         startAdornment={
           <InputAdornment className={classes.adornment} position="start">
@@ -56,7 +70,7 @@ export const RepositoriesSearchInput = (props: Props) => {
         }
         inputProps={{ 'aria-label': 'search github repository' }}
       />
-      <IconButton className={classes.iconButton} aria-label="search">
+      <IconButton onClick={submitSearch} className={classes.iconButton} aria-label="search">
         <SearchIcon />
       </IconButton>
     </Paper>

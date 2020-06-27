@@ -54,23 +54,22 @@ export const Home: React.SFC<Props> = ({ history }) => {
     [],
   );
 
-  const handleSubmitInputSearch: any = useCallback(
-    debounce((value: string) => {
-      const currentValue = value || repositorySearchValue;
+  const handleSubmitInputSearch: any = (value: string) => {
+    const currentValue = value || repositorySearchValue;
 
-      if (currentValue) {
-        history.push(`/repositories?repositorySearchValue=${currentValue}`);
-        getRepositories({ variables: { queryString: `name:${currentValue}`, repositoryItemsCount: 10 } });
-      }
-    }, 500),
-    [],
-  );
+    if (currentValue) {
+      history.push(`/repositories?repositorySearchValue=${currentValue}`);
+      getRepositories({ variables: { queryString: `name:${currentValue}`, repositoryItemsCount: 10 } });
+    }
+  };
+
+  const debouncedSubmitInputSearch: any = useCallback(debounce(handleSubmitInputSearch, 1500), []);
 
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     if (value) {
-      handleSubmitInputSearch(value.trim());
+      debouncedSubmitInputSearch(value.trim());
     } else {
       history.push(`/repositories`);
     }
@@ -146,6 +145,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
         value={repositorySearchValue}
         loading={repositoriesQuery.loading}
         handleSearchInputChange={handleSearchInputChange}
+        debouncedSubmitInputSearch={debouncedSubmitInputSearch}
       />
       <RepositoryTable />
     </div>
