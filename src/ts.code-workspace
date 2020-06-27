@@ -1,21 +1,23 @@
 {
   "folders": [
     {
-      "path": "."
-    },
-    {
-      "path": "../../gh-rep-graphql"
-    },
-    {
+      "name": "github-repo-search",
       "path": ".."
     },
     {
+      "name": "gh-rep-graphql",
+      "path": "../../gh-rep-graphql"
+    },
+    {
+      "name": "onboarding-ui",
       "path": "../../onboarding-ui"
     },
     {
+      "name": "FactorHero-ef1a267eef19f1444621e5def6801a79b18a6aa8",
       "path": "../../../Downloads/FactorHero-ef1a267eef19f1444621e5def6801a79b18a6aa8"
     },
     {
+      "name": "FactorHero-master",
       "path": "../../../Downloads/FactorHero-master"
     }
   ]

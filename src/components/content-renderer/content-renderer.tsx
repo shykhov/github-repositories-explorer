@@ -1,17 +1,16 @@
-import { ReactNode } from 'react'
-
+import { ReactNode } from 'react';
 
 interface Props {
-  isLoading: boolean,
-  hasError: boolean,
-  isEmpty: boolean,
+  isLoading: boolean;
+  hasError: boolean;
+  isEmpty: boolean;
   renderLoading(): ReactNode;
   renderError(): ReactNode;
   renderEmpty(): ReactNode;
-  renderContent(): ReactNode
+  renderContent(): ReactNode;
 }
 
-export const ContentRenderer = (props: Props) => {
+export const ContentRenderer = (props: Props): ReactNode => {
   const { isLoading, hasError, isEmpty, renderLoading, renderError, renderEmpty, renderContent } = props;
 
   if (isLoading) {

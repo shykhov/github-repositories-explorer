@@ -1,25 +1,15 @@
-import React from "react";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams
-} from "react-router-dom";
+import { Home } from './pages/home';
 
-import { Home } from './pages/home'
+const App = () => (
+  <Router>
+    <Switch>
+      <Route exact component={Home} path="/repositories" />
+      <Redirect to="/repositories" />
+    </Switch>
+  </Router>
+);
 
-export default function App() {
-  return (
-    <Router>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-        </Switch>
-    </Router>
-  );
-}
-
+export default App;
