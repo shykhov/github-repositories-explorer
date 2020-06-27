@@ -13,6 +13,8 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    '@typescript-eslint/no-unsafe-call': 0,
+    '@typescript-eslint/no-unsafe-member-access': 0,
     'react/jsx-curly-newline': 0,
     '@typescript-eslint/unbound-method': 0,
     '@typescript-eslint/no-unsafe-return': 0,

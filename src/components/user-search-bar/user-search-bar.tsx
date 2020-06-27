@@ -1,37 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import * as st from './user-search-bar.styled';
+import { Select, BarWrapper } from './user-search-bar.styled';
+import { SearchOption } from '../search-option';
 
 interface InputOptions {
   inputValue?: string;
 }
 
+export interface SelectValue {
+  value: string;
+  label: string;
+  iconSrc: string;
+}
+
 interface SearchBarProps {
-  searchValue: any;
-  onInputChange: any;
-  onSelectChange: any;
-  userItemsCount: any;
-  value: any;
-  data: any;
-  loading: any;
-  refetch: any;
+  onInputChange(): void;
+  onSelectChange(user: SelectValue): void;
+  value: SelectValue;
+  loading: boolean;
+  refetch(): void;
   options: any;
 }
 
-export const SearchBar = (props: SearchBarProps) => {
-  const { searchValue, onInputChange, onSelectChange, userItemsCount, value, data, loading, refetch, options } = props;
+export const UserSearchBar = (props: SearchBarProps) => {
+  const { onInputChange, onSelectChange, value, loading, refetch, options } = props;
 
   return (
-    <st.BarWrapper>
-      <st.Select
+    <BarWrapper>
+      <Select
         isLoading={loading}
         loadOptions={refetch}
         value={value}
         cacheOptions
         isSearchable
         maxMenuHeight={200}
-        components={{ Option, SingleValue: Option }}
+        components={{ Option: SearchOption, SingleValue: SearchOption }}
         isClearable
         onChange={onSelectChange}
         noOptionsMessage={({ inputValue }: InputOptions) =>
@@ -41,8 +44,6 @@ export const SearchBar = (props: SearchBarProps) => {
         options={options}
         onInputChange={onInputChange}
       />
-    </st.BarWrapper>
+    </BarWrapper>
   );
 };
-
-export default SearchBar;
