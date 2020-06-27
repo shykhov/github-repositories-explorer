@@ -1,14 +1,15 @@
 import React, { useState, useCallback, useMemo, ChangeEvent, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash/debounce';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Redirect, RouteProps } from 'react-router-dom';
 
-import { useUrlQuery } from '../../hooks';
+import { useUrlQuery, useFormatUser, useFormatRepositories } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
+import { REPOSITORIES_PATHNAME, DEFAULT_PATHNAME } from '../../constants';
+import { ContentRenderer } from '../../components/content-renderer';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
 import { UserSearchSelect } from '../../components/user-search-select';
-import { REPOSITORIES_PATHNAME } from '../../constants';
 import { prepareSearchParams } from './home.utils';
 
 type Props = RouteComponentProps;
@@ -18,6 +19,18 @@ interface UserOptions {
     login: string;
     name: string;
     avatarUrl: string;
+  };
+}
+
+interface RepositoryOption {
+  node: {
+    stargazers: {
+      totalCount: number;
+    };
+    name: string;
+    forks: {
+      totalCount: number;
+    };
   };
 }
 
@@ -41,22 +54,40 @@ export const Home: React.SFC<Props> = ({ history }) => {
   const repositorySearchParams = query.get('repositorySearchValue');
   const pageParams = query.get('page');
   const rowsPerPageParams = query.get('rowsPerPage');
+  const searchUserValue = userSearchValue || userLoginParams;
 
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
     variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 10 },
   });
 
-  const handleChangePage = (event: unknown, newPage: number) => {};
+  const usersQuery = useQuery(FETCH_USERS, {
+    variables: { name: searchUserValue, userItemsCount: 100 },
+    skip: !searchUserValue,
+  });
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleChangePage = (event: unknown, newPage: number) => {
+    history.push({
+      pathname: REPOSITORIES_PATHNAME,
+      search: prepareSearchParams({
+        repositorySearchValue: repositorySearchParams,
+        userLogin: userLoginParams,
+        page: `${newPage}`,
+        rowsPerPage: rowsPerPageParams,
+      }),
+    });
+  };
 
-  useEffect(() => {
-    if (repositorySearchParams || userLoginParams) {
-      getRepositories({ variables: { queryString: `name:${repositorySearchParams}`, repositoryItemsCount: 10 } });
-    }
-  }, [getRepositories]);
-
-  const searchUserValue = userSearchValue || userLoginParams;
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    history.push({
+      pathname: REPOSITORIES_PATHNAME,
+      search: prepareSearchParams({
+        repositorySearchValue: repositorySearchParams,
+        userLogin: userLoginParams,
+        page: '0',
+        rowsPerPage: `${event.target.value}`,
+      }),
+    });
+  };
 
   const handleSelectInputChange: any = useCallback(
     debounce((value: string) => {
@@ -124,28 +155,15 @@ export const Home: React.SFC<Props> = ({ history }) => {
     });
   };
 
-  const usersQuery = useQuery(FETCH_USERS, {
-    variables: { name: searchUserValue, userItemsCount: 100 },
-    skip: !searchUserValue,
-  });
+  useEffect(() => {
+    if (repositorySearchParams || userLoginParams) {
+      getRepositories({ variables: { queryString: `name:${repositorySearchParams}`, repositoryItemsCount: 10 } });
+    }
+  }, [getRepositories]);
 
-  const formatUserData = useCallback(
-    options => {
-      if (options && options.search && options.search.edges) {
-        return options.search.edges.map(
-          ({ node: { login, name, avatarUrl } }: UserOptions): SelectOption => ({
-            iconSrc: avatarUrl,
-            label: name ? `${name} (${login})` : login,
-            value: login,
-          }),
-        );
-      }
-      return [];
-    },
-    [usersQuery.data],
-  );
+  const repositories = useFormatRepositories(repositoriesQuery.data);
 
-  const userOptions: Array<any> = formatUserData(usersQuery.data);
+  const userOptions = useFormatUser(usersQuery.data);
 
   const userValue = useMemo(
     (): any => userOptions.find((userOption: any): any => userOption.value === userLoginParams),
@@ -153,22 +171,34 @@ export const Home: React.SFC<Props> = ({ history }) => {
   );
 
   return (
-    <div>
-      <UserSearchSelect
-        refetch={() => {}}
-        options={formatUserData(usersQuery.data)}
-        loading={usersQuery.loading}
-        onSelectChange={handleSelectChange}
-        onInputChange={handleSelectInputChange}
-        value={userValue}
-      />
-      <RepositoriesSearchInput
-        value={repositorySearchValue || repositorySearchParams}
-        loading={repositoriesQuery.loading}
-        handleSearchInputChange={handleSearchInputChange}
-        debouncedSubmitInputSearch={debouncedSubmitInputSearch}
-      />
-      <RepositoryTable />
-    </div>
+    <ContentRenderer
+      hasError={!(rowsPerPageParams && pageParams)}
+      errorComponent={<Redirect to={DEFAULT_PATHNAME} />}
+      contentComponent={
+        <>
+          <UserSearchSelect
+            options={userOptions}
+            loading={usersQuery.loading}
+            onSelectChange={handleSelectChange}
+            onInputChange={handleSelectInputChange}
+            value={userValue}
+          />
+          <RepositoriesSearchInput
+            value={repositorySearchValue || repositorySearchParams}
+            loading={repositoriesQuery.loading}
+            handleSearchInputChange={handleSearchInputChange}
+            debouncedSubmitInputSearch={debouncedSubmitInputSearch}
+          />
+          <RepositoryTable
+            loading={repositoriesQuery.loading}
+            repositories={repositories}
+            rowsPerPage={+rowsPerPageParams}
+            page={+pageParams}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            handleChangePage={handleChangePage}
+          />
+        </>
+      }
+    />
   );
 };

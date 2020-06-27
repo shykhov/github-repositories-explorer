@@ -18,18 +18,16 @@ interface SearchBarProps {
   onSelectChange(user: SelectValue): void;
   value: SelectValue;
   loading: boolean;
-  refetch(): void;
   options: any;
 }
 
 export const UserSearchSelect = (props: SearchBarProps) => {
-  const { onInputChange, onSelectChange, value, loading, refetch, options } = props;
+  const { onInputChange, onSelectChange, value, loading, options } = props;
 
   return (
     <BarWrapper>
       <Select
         isLoading={loading}
-        loadOptions={refetch}
         value={value}
         cacheOptions
         isSearchable

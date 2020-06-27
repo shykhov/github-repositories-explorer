@@ -1,39 +1,39 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 interface Props {
   isLoading: boolean;
   hasError: boolean;
   isEmpty: boolean;
-  renderLoading(): ReactNode;
-  renderError(): ReactNode;
-  renderEmpty(): ReactNode;
-  renderContent(): ReactNode;
+  loadingComponent: ReactElement;
+  errorComponent: ReactElement;
+  emptyComponent: ReactElement;
+  contentComponent: ReactElement;
 }
 
-export const ContentRenderer = (props: Props): ReactNode => {
-  const { isLoading, hasError, isEmpty, renderLoading, renderError, renderEmpty, renderContent } = props;
+export const ContentRenderer = (props: Props): ReactElement => {
+  const { isLoading, hasError, isEmpty, loadingComponent, errorComponent, emptyComponent, contentComponent } = props;
 
   if (isLoading) {
-    return renderLoading();
+    return loadingComponent;
   }
 
   if (hasError) {
-    return renderError();
+    return errorComponent;
   }
 
   if (isEmpty) {
-    return renderEmpty();
+    return emptyComponent;
   }
 
-  return renderContent();
+  return contentComponent;
 };
 
 ContentRenderer.defaultProps = {
   isLoading: false,
   hasError: false,
   isEmpty: false,
-  renderLoading: () => null,
-  renderContent: () => null,
-  renderError: () => null,
-  renderEmpty: () => null,
+  loadingComponent: null,
+  errorComponent: null,
+  contentComponent: null,
+  emptyComponent: null,
 };
