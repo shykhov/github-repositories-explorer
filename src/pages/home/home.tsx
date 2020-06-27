@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { useUrlQuery } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
 import { RepositoryTable } from '../../components/repository-table';
-import { UserSearchBar } from '../../components/user-search-bar';
+import { UserSearchSelect } from '../../components/user-search-select';
 
 type Props = RouteComponentProps;
 
@@ -85,7 +85,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
 
   return (
     <div>
-      <UserSearchBar
+      <UserSearchSelect
         refetch={() => {}}
         options={formatUserData(usersQuery.data)}
         loading={usersQuery.loading}

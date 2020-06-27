@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Select, BarWrapper } from './user-search-bar.styled';
-import { SearchOption } from '../search-option';
+import { Select, BarWrapper } from './user-search-select.styled';
+import { SearchOption } from './search-option';
 
 interface InputOptions {
   inputValue?: string;
@@ -22,7 +22,7 @@ interface SearchBarProps {
   options: any;
 }
 
-export const UserSearchBar = (props: SearchBarProps) => {
+export const UserSearchSelect = (props: SearchBarProps) => {
   const { onInputChange, onSelectChange, value, loading, refetch, options } = props;
 
   return (
