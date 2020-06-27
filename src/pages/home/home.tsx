@@ -72,35 +72,18 @@ export const Home: React.SFC<Props> = ({ history }) => {
       debouncedSubmitInputSearch(value.trim());
     } else {
       history.push(`/repositories`);
+      debouncedSubmitInputSearch.cancel();
     }
 
     setRepositorySearchValue(value);
   };
 
-  // const handleSearchInputChange: any = useCallback(
-  //   debounce((event: ChangeEvent<HTMLInputElement>) => {
-  //     const value = event.persist().target.value.trim();
-  //     if (value) {
-  //       setRepositorySearchValue(value);
-  //     }
-  //   }, 500),
-  //   [],
-  // );
-
-  const handleSearchInputSubmit = (event: any) => {
-    const inputValue = event.target.elements[0].value;
-
-    if (inputValue) {
-      // history.push(`/repositories`);
-    }
-  };
-
   const handleSelectChange = (user: SelectValue) => {
-    // if (user) {
-    //   history.push(`/repositories?userLogin=${user.value}`);
-    // } else {
-    //   history.push(`/repositories`);
-    // }
+    if (user) {
+      history.push(`/repositories?userLogin=${user.value}`);
+    } else {
+      history.push(`/repositories`);
+    }
   };
 
   const usersQuery = useQuery(FETCH_USERS, {
@@ -142,7 +125,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
         value={userValue}
       />
       <RepositoriesSearchInput
-        value={repositorySearchValue}
+        value={repositorySearchValue || repositorySearchParams}
         loading={repositoriesQuery.loading}
         handleSearchInputChange={handleSearchInputChange}
         debouncedSubmitInputSearch={debouncedSubmitInputSearch}
