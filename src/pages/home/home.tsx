@@ -8,6 +8,8 @@ import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
 import { UserSearchSelect } from '../../components/user-search-select';
+import { REPOSITORIES_PATHNAME } from '../../constants';
+import { prepareSearchParams } from './home.utils';
 
 type Props = RouteComponentProps;
 
@@ -38,10 +40,15 @@ export const Home: React.SFC<Props> = ({ history }) => {
   const userLoginParams = query.get('userLogin');
   const repositorySearchParams = query.get('repositorySearchValue');
   const pageParams = query.get('page');
+  const rowsPerPageParams = query.get('rowsPerPage');
 
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
     variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 10 },
   });
+
+  const handleChangePage = (event: unknown, newPage: number) => {};
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {};
 
   useEffect(() => {
     if (repositorySearchParams || userLoginParams) {
@@ -63,13 +70,27 @@ export const Home: React.SFC<Props> = ({ history }) => {
   const handleSubmitInputSearch: any = (value: string) => {
     const currentValue = value || repositorySearchValue;
 
+    history.push({
+      pathname: REPOSITORIES_PATHNAME,
+      search: prepareSearchParams({
+        repositorySearchValue: currentValue,
+        userLogin: userLoginParams,
+        page: pageParams,
+        rowsPerPage: rowsPerPageParams,
+      }),
+    });
+
     if (currentValue) {
-      history.push(`/repositories?repositorySearchValue=${currentValue}`);
       getRepositories({ variables: { queryString: `name:${currentValue}`, repositoryItemsCount: 10 } });
     }
   };
 
-  const debouncedSubmitInputSearch: any = useCallback(debounce(handleSubmitInputSearch, 1500), []);
+  const debouncedSubmitInputSearch: any = useCallback(debounce(handleSubmitInputSearch, 1500), [
+    userLoginParams,
+    pageParams,
+    rowsPerPageParams,
+    repositorySearchParams,
+  ]);
 
   const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -77,7 +98,14 @@ export const Home: React.SFC<Props> = ({ history }) => {
     if (value) {
       debouncedSubmitInputSearch(value.trim());
     } else {
-      history.push(`/repositories`);
+      history.push({
+        pathname: REPOSITORIES_PATHNAME,
+        search: prepareSearchParams({
+          userLogin: userLoginParams,
+          page: pageParams,
+          rowsPerPage: rowsPerPageParams,
+        }),
+      });
       debouncedSubmitInputSearch.cancel();
     }
 
@@ -85,11 +113,15 @@ export const Home: React.SFC<Props> = ({ history }) => {
   };
 
   const handleSelectChange = (user: SelectValue) => {
-    if (user) {
-      history.push(`/repositories?userLogin=${user.value}`);
-    } else {
-      history.push(`/repositories`);
-    }
+    history.push({
+      pathname: REPOSITORIES_PATHNAME,
+      search: prepareSearchParams({
+        repositorySearchValue: repositorySearchParams,
+        userLogin: user ? user.value : null,
+        page: pageParams,
+        rowsPerPage: rowsPerPageParams,
+      }),
+    });
   };
 
   const usersQuery = useQuery(FETCH_USERS, {
