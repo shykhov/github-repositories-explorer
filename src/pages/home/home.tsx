@@ -23,6 +23,7 @@ export const Home: FC<Props> = ({ history }) => {
   const query = useUrlQuery();
   const [userSearchValue, setUserSearchValue] = useState('');
   const [repositorySearchValue, setRepositorySearchValue] = useState('');
+  const [repositoryItemsCount, setRepositoryItemsCount] = useState(100);
 
   const userLoginParams = query.get('userLogin');
   const repositorySearchParams = query.get('repositorySearchValue');
@@ -31,13 +32,15 @@ export const Home: FC<Props> = ({ history }) => {
   const searchUserValue = userSearchValue || userLoginParams;
 
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
-    variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 100 },
+    variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount },
   });
 
   const usersQuery = useQuery(FETCH_USERS, {
     variables: { name: searchUserValue, userItemsCount: 100 },
     skip: !searchUserValue,
   });
+
+  const repositoriesData = useFormatRepositories(repositoriesQuery.data);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     history.push({
@@ -49,6 +52,10 @@ export const Home: FC<Props> = ({ history }) => {
         rowsPerPage: rowsPerPageParams,
       }),
     });
+
+    if (newPage * +rowsPerPageParams + +rowsPerPageParams <= repositoriesData.repositoryCount) {
+      setRepositoryItemsCount(prevState => prevState + 100);
+    }
   };
 
   const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +96,7 @@ export const Home: FC<Props> = ({ history }) => {
       getRepositories({
         variables: {
           queryString: prepareQueryParams({ name: currentValue, owner: userLoginParams }),
-          repositoryItemsCount: 100,
+          repositoryItemsCount,
         },
       });
     }
@@ -106,13 +113,22 @@ export const Home: FC<Props> = ({ history }) => {
     const value = event.target.value;
 
     if (value) {
+      history.push({
+        pathname: REPOSITORIES_PATHNAME,
+        search: prepareSearchParams({
+          userLogin: userLoginParams,
+          page: '0',
+          rowsPerPage: rowsPerPageParams,
+        }),
+      });
+
       debouncedSubmitInputSearch(value.trim());
     } else {
       history.push({
         pathname: REPOSITORIES_PATHNAME,
         search: prepareSearchParams({
           userLogin: userLoginParams,
-          page: pageParams,
+          page: '0',
           rowsPerPage: rowsPerPageParams,
         }),
       });
@@ -128,36 +144,24 @@ export const Home: FC<Props> = ({ history }) => {
       search: prepareSearchParams({
         repositorySearchValue: repositorySearchParams,
         userLogin: user ? user.value : '',
-        page: pageParams,
+        page: '0',
         rowsPerPage: rowsPerPageParams,
       }),
     });
   };
 
-  const repositoriesData = useFormatRepositories(repositoriesQuery.data);
-
   const userOptions = useFormatUser(usersQuery.data);
 
   useEffect(() => {
-    if (
-      repositorySearchParams ||
-      (userLoginParams && repositoriesData.repositoryCount > +rowsPerPageParams * +pageParams)
-    ) {
+    if (repositorySearchParams || userLoginParams) {
       getRepositories({
         variables: {
           queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
-          repositoryItemsCount: 100,
+          repositoryItemsCount,
         },
       });
     }
-  }, [
-    getRepositories,
-    userLoginParams,
-    repositorySearchParams,
-    pageParams,
-    rowsPerPageParams,
-    repositoriesData.repositoryCount,
-  ]);
+  }, [getRepositories, userLoginParams, repositorySearchParams, repositoryItemsCount]);
 
   const userValue = useMemo(
     (): any => userOptions.find((userOption: any): any => userOption.value === userLoginParams),

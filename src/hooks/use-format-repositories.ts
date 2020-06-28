@@ -5,7 +5,9 @@ interface RepositoryOption {
     stargazers: {
       totalCount: number;
     };
-    name: string;
+    id: string;
+    url: string;
+    nameWithOwner: string;
     forks: {
       totalCount: number;
     };
@@ -20,9 +22,11 @@ interface RepositoryOptions {
 }
 
 export interface RepositoryResult {
-  name: string;
+  nameWithOwner: string;
   stars: number;
   forks: number;
+  url: string;
+  id: string;
 }
 
 export type RepositoryResultData = {
@@ -36,10 +40,12 @@ export const useFormatRepositories = (options: RepositoryOptions): RepositoryRes
       return {
         repositoryCount: options.search.repositoryCount,
         elements: options.search.edges.map(
-          ({ node: { stargazers, name, forks } }: RepositoryOption): RepositoryResult => ({
+          ({ node: { stargazers, nameWithOwner, forks, url, id } }: RepositoryOption): RepositoryResult => ({
             stars: stargazers.totalCount,
-            name,
+            nameWithOwner,
             forks: forks.totalCount,
+            url,
+            id,
           }),
         ),
       };

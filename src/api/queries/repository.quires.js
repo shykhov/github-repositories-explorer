@@ -25,15 +25,15 @@ export const FETCH_REPOSTORIES = gql`
       edges {
         node {
           ... on Repository {
-            name
-            descriptionHTML
+            id
+            nameWithOwner
             stargazers {
               totalCount
             }
             forks {
               totalCount
             }
-            updatedAt
+            url
           }
         }
       }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,98 +10,102 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
+import { RepositoryResultData, RepositoryResult } from '../../hooks';
+
 interface Column {
-  id: 'name' | 'stars' | 'forks';
+  id: 'nameWithOwner' | 'stars' | 'forks';
   label: string;
   minWidth?: number;
-  align?: 'right';
+  align?: 'right' | 'center';
   format?: (value: number) => string;
 }
 
 const columns: Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'stars', label: 'Stars', minWidth: 100 },
+  { id: 'nameWithOwner', label: 'Owner/Name', minWidth: 170 },
+  { id: 'stars', label: 'Stars', minWidth: 100, align: 'center' },
   {
     id: 'forks',
     label: 'Forks',
     minWidth: 170,
+    align: 'center',
   },
-];
-
-interface Data {
-  name: string;
-  stars: number;
-  forks: number;
-}
-
-function createData(name: string, forks: number, stars: number): Data {
-  return { name, forks, stars };
-}
-
-const rows = [
-  createData('IN', 1324171354, 3287263),
-  createData('CN', 1403500365, 9596961),
-  createData('IT', 60483973, 301340),
-  createData('US', 327167434, 9833520),
-  createData('CA', 37602103, 9984670),
-  createData('AU', 25475400, 7692024),
 ];
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
+    maxWidth: '800px',
   },
   container: {
     maxHeight: 440,
+  },
+  headCell: {
+    fontWeight: 'bold',
+  },
+  table: {
+    tableLayout: 'fixed',
   },
 });
 
 interface Props {
   loading: boolean;
-  repositories: unknown;
+  repositoriesData: RepositoryResultData;
   handleChangePage(event: unknown, newPage: number): void;
   handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>): void;
   page: number;
   rowsPerPage: number;
 }
 
-export const RepositoryTable = (props: Props) => {
-  const { handleChangePage, handleChangeRowsPerPage, page, rowsPerPage } = props;
+export const RepositoryTable: FC<Props> = props => {
+  const { handleChangePage, handleChangeRowsPerPage, page, rowsPerPage, repositoriesData } = props;
   const classes = useStyles();
 
   return (
-    <Paper className={classes.root}>
+    <Paper elevation={5} className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table className={classes.table} stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
               {columns.map(column => (
-                <TableCell key={column.id} align={column.align} style={{ minWidth: column.minWidth }}>
+                <TableCell
+                  className={classes.headCell}
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
                   {column.label}
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-              <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                {columns.map(column => {
-                  const value = row[column.id];
-                  return (
-                    <TableCell key={column.id} align={column.align}>
-                      {column.format && typeof value === 'number' ? column.format(value) : value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            ))}
+            {repositoriesData.elements
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((repository: RepositoryResult) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={repository.id}>
+                  {columns.map(column => {
+                    const value = repository[column.id];
+                    const formattedValue = column.format && typeof value === 'number' ? column.format(value) : value;
+                    return (
+                      <TableCell key={column.id} align={column.align}>
+                        {repository.url && column.id === 'nameWithOwner' ? (
+                          <Link href={repository.url} target="_blank" rel="noopener noreferrer">
+                            {formattedValue}
+                          </Link>
+                        ) : (
+                          formattedValue
+                        )}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={repositoriesData.repositoryCount}
         rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
