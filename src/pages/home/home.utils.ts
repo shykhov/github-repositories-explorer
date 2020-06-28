@@ -27,20 +27,26 @@ export const prepareSearchParams = (params: SearchParams): string => {
 };
 
 interface QueryParams {
-  [name: string]: string | null;
-  owner: string | null;
+  [user: string]: string | null;
+  ['in:name']: string;
+  sort: string;
 }
 
 export const prepareQueryParams = (params: QueryParams): string => {
   if (isPlainObject(params) && !isEmpty(params)) {
-    const result = Object.keys(params).reduce((accumulator, currentValue) => {
+    const objectKeys = Object.keys(params);
+    const result = objectKeys.reduce((accumulator, currentValue) => {
       const newValue = currentValue || '';
       const paramsValue: string | null = params[newValue];
       if (isNil(currentValue) || isNil(paramsValue) || isEmpty(paramsValue)) {
         return accumulator;
       }
 
-      return `${accumulator}${currentValue}:${paramsValue}`;
+      const isComplexQuery = currentValue.includes(':');
+
+      return `${accumulator}${objectKeys.length === 1 ? '' : ' '}${currentValue}${isComplexQuery ? '' : ':'}${
+        isComplexQuery ? ' ' : ''
+      }${paramsValue}`;
     }, '');
 
     return result;

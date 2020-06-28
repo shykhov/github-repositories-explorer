@@ -57,7 +57,7 @@ export const Home: FC<Props> = ({ history }) => {
     if (newPage * REPOSITORIES_PER_PAGE + REPOSITORIES_PER_PAGE <= repositoriesData.repositoryCount) {
       getRepositories({
         variables: {
-          queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
+          queryString: prepareQueryParams({ 'in:name': repositorySearchParams, user: userLoginParams, sort: 'stars' }),
           after: repositoriesData.pageInfo.endCursor,
         },
       });
@@ -88,7 +88,7 @@ export const Home: FC<Props> = ({ history }) => {
     if (currentValue) {
       getRepositories({
         variables: {
-          queryString: prepareQueryParams({ name: currentValue, owner: userLoginParams }),
+          queryString: prepareQueryParams({ 'in:name': currentValue, user: userLoginParams, sort: 'stars' }),
         },
       });
     }
@@ -144,7 +144,7 @@ export const Home: FC<Props> = ({ history }) => {
     if (repositorySearchParams || userLoginParams) {
       getRepositories({
         variables: {
-          queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
+          queryString: prepareQueryParams({ 'in:name': repositorySearchParams, user: userLoginParams, sort: 'stars' }),
         },
       });
     }
