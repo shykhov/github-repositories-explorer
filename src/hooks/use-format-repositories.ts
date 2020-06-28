@@ -17,6 +17,12 @@ interface RepositoryOption {
 interface RepositoryOptions {
   search: {
     repositoryCount: number;
+    pageInfo: {
+      endCursor: string;
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor: string;
+    };
     edges: [RepositoryOption];
   };
 }
@@ -32,6 +38,18 @@ export interface RepositoryResult {
 export type RepositoryResultData = {
   elements: Array<RepositoryResult>;
   repositoryCount: number;
+  pageInfo: {
+    endCursor: string;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string;
+  };
+};
+
+const defaultValue = {
+  elements: [],
+  repositoryCount: 0,
+  pageInfo: { endCursor: '', hasNextPage: false, hasPreviousPage: false, startCursor: '' },
 };
 
 export const useFormatRepositories = (options: RepositoryOptions): RepositoryResultData =>
@@ -39,6 +57,7 @@ export const useFormatRepositories = (options: RepositoryOptions): RepositoryRes
     if (options && options.search && options.search.edges) {
       return {
         repositoryCount: options.search.repositoryCount,
+        pageInfo: options.search.pageInfo,
         elements: options.search.edges.map(
           ({ node: { stargazers, nameWithOwner, forks, url, id } }: RepositoryOption): RepositoryResult => ({
             stars: stargazers.totalCount,
@@ -50,5 +69,5 @@ export const useFormatRepositories = (options: RepositoryOptions): RepositoryRes
         ),
       };
     }
-    return { elements: [], repositoryCount: 0 };
+    return defaultValue;
   }, [options]);

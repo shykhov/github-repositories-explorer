@@ -6,19 +6,18 @@ interface SearchParams {
   [repositorySearchValue: string]: string | null;
   userLogin: string | null;
   page: string | null;
-  rowsPerPage: string | null;
 }
 
 export const prepareSearchParams = (params: SearchParams): string => {
   if (isPlainObject(params) && !isEmpty(params)) {
-    const result = Object.keys(params).reduce((accumulator, currentValue, index) => {
+    const result = Object.keys(params).reduce((accumulator, currentValue) => {
       const newValue = currentValue || '';
       const paramsValue: string | null = params[newValue];
       if (isNil(currentValue) || isNil(paramsValue) || isEmpty(paramsValue)) {
         return accumulator;
       }
 
-      return `${accumulator}${accumulator.length === 1 ? '' : '&'}${currentValue}=${paramsValue || ''}`;
+      return `${accumulator}${accumulator.length === 1 ? '' : '&'}${currentValue}=${paramsValue}`;
     }, '?');
 
     return result.length === 1 ? '' : result;

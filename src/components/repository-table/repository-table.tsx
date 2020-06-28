@@ -11,6 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 import { RepositoryResultData, RepositoryResult } from '../../hooks';
+import { REPOSITORIES_PER_PAGE } from '../../constants';
 
 interface Column {
   id: 'nameWithOwner' | 'stars' | 'forks';
@@ -50,13 +51,11 @@ interface Props {
   loading: boolean;
   repositoriesData: RepositoryResultData;
   handleChangePage(event: unknown, newPage: number): void;
-  handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>): void;
   page: number;
-  rowsPerPage: number;
 }
 
 export const RepositoryTable: FC<Props> = props => {
-  const { handleChangePage, handleChangeRowsPerPage, page, rowsPerPage, repositoriesData } = props;
+  const { handleChangePage, page, repositoriesData } = props;
   const classes = useStyles();
 
   return (
@@ -78,38 +77,35 @@ export const RepositoryTable: FC<Props> = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {repositoriesData.elements
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((repository: RepositoryResult) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={repository.id}>
-                  {columns.map(column => {
-                    const value = repository[column.id];
-                    const formattedValue = column.format && typeof value === 'number' ? column.format(value) : value;
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {repository.url && column.id === 'nameWithOwner' ? (
-                          <Link href={repository.url} target="_blank" rel="noopener noreferrer">
-                            {formattedValue}
-                          </Link>
-                        ) : (
-                          formattedValue
-                        )}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
+            {repositoriesData.elements.map((repository: RepositoryResult) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={repository.id}>
+                {columns.map(column => {
+                  const value = repository[column.id];
+                  const formattedValue = column.format && typeof value === 'number' ? column.format(value) : value;
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {repository.url && column.id === 'nameWithOwner' ? (
+                        <Link href={repository.url} target="_blank" rel="noopener noreferrer">
+                          {formattedValue}
+                        </Link>
+                      ) : (
+                        formattedValue
+                      )}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[50]}
+        rowsPerPage={REPOSITORIES_PER_PAGE}
         component="div"
         count={repositoriesData.repositoryCount}
-        rowsPerPage={rowsPerPage}
         page={page}
         onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
   );

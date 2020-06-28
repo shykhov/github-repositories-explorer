@@ -3,9 +3,9 @@ import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash/debounce';
 import { RouteComponentProps, Redirect, RouteProps } from 'react-router-dom';
 
-import { useUrlQuery, useFormatUser, useFormatRepositories } from '../../hooks';
+import { useUrlQuery, useFormatUser, useFormatRepositories, RepositoryResultData } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
-import { REPOSITORIES_PATHNAME, DEFAULT_PATHNAME } from '../../constants';
+import { REPOSITORIES_PATHNAME, DEFAULT_PATHNAME, REPOSITORIES_PER_PAGE } from '../../constants';
 import { ContentRenderer } from '../../components/content-renderer';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
@@ -19,28 +19,30 @@ export interface SelectValue {
   label: string;
 }
 
+export interface RepositoriesVariables {
+  queryString: string;
+  repositoryItemsCount: number;
+  after?: string;
+}
+
 export const Home: FC<Props> = ({ history }) => {
   const query = useUrlQuery();
   const [userSearchValue, setUserSearchValue] = useState('');
   const [repositorySearchValue, setRepositorySearchValue] = useState('');
-  const [repositoryItemsCount, setRepositoryItemsCount] = useState(100);
 
   const userLoginParams = query.get('userLogin');
   const repositorySearchParams = query.get('repositorySearchValue');
   const pageParams = query.get('page');
-  const rowsPerPageParams = query.get('rowsPerPage');
   const searchUserValue = userSearchValue || userLoginParams;
 
-  const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
-    variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount },
-  });
+  const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES);
 
   const usersQuery = useQuery(FETCH_USERS, {
     variables: { name: searchUserValue, userItemsCount: 100 },
     skip: !searchUserValue,
   });
 
-  const repositoriesData = useFormatRepositories(repositoriesQuery.data);
+  const repositoriesData: RepositoryResultData = useFormatRepositories(repositoriesQuery.data);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     history.push({
@@ -49,25 +51,17 @@ export const Home: FC<Props> = ({ history }) => {
         repositorySearchValue: repositorySearchParams,
         userLogin: userLoginParams,
         page: `${newPage}`,
-        rowsPerPage: rowsPerPageParams,
       }),
     });
 
-    if (newPage * +rowsPerPageParams + +rowsPerPageParams <= repositoriesData.repositoryCount) {
-      setRepositoryItemsCount(prevState => prevState + 100);
+    if (newPage * REPOSITORIES_PER_PAGE + REPOSITORIES_PER_PAGE <= repositoriesData.repositoryCount) {
+      getRepositories({
+        variables: {
+          queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
+          after: repositoriesData.pageInfo.endCursor,
+        },
+      });
     }
-  };
-
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    history.push({
-      pathname: REPOSITORIES_PATHNAME,
-      search: prepareSearchParams({
-        repositorySearchValue: repositorySearchParams,
-        userLogin: userLoginParams,
-        page: '0',
-        rowsPerPage: `${event.target.value}`,
-      }),
-    });
   };
 
   const handleSelectInputChange: any = useCallback(
@@ -88,7 +82,6 @@ export const Home: FC<Props> = ({ history }) => {
         repositorySearchValue: currentValue,
         userLogin: userLoginParams,
         page: pageParams,
-        rowsPerPage: rowsPerPageParams,
       }),
     });
 
@@ -96,7 +89,6 @@ export const Home: FC<Props> = ({ history }) => {
       getRepositories({
         variables: {
           queryString: prepareQueryParams({ name: currentValue, owner: userLoginParams }),
-          repositoryItemsCount,
         },
       });
     }
@@ -105,7 +97,6 @@ export const Home: FC<Props> = ({ history }) => {
   const debouncedSubmitInputSearch: any = useCallback(debounce(handleSubmitInputSearch, 1500), [
     userLoginParams,
     pageParams,
-    rowsPerPageParams,
     repositorySearchParams,
   ]);
 
@@ -118,7 +109,6 @@ export const Home: FC<Props> = ({ history }) => {
         search: prepareSearchParams({
           userLogin: userLoginParams,
           page: '0',
-          rowsPerPage: rowsPerPageParams,
         }),
       });
 
@@ -129,7 +119,6 @@ export const Home: FC<Props> = ({ history }) => {
         search: prepareSearchParams({
           userLogin: userLoginParams,
           page: '0',
-          rowsPerPage: rowsPerPageParams,
         }),
       });
       debouncedSubmitInputSearch.cancel();
@@ -145,7 +134,6 @@ export const Home: FC<Props> = ({ history }) => {
         repositorySearchValue: repositorySearchParams,
         userLogin: user ? user.value : '',
         page: '0',
-        rowsPerPage: rowsPerPageParams,
       }),
     });
   };
@@ -157,11 +145,10 @@ export const Home: FC<Props> = ({ history }) => {
       getRepositories({
         variables: {
           queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
-          repositoryItemsCount,
         },
       });
     }
-  }, [getRepositories, userLoginParams, repositorySearchParams, repositoryItemsCount]);
+  }, [getRepositories, userLoginParams, repositorySearchParams]);
 
   const userValue = useMemo(
     (): any => userOptions.find((userOption: any): any => userOption.value === userLoginParams),
@@ -170,7 +157,7 @@ export const Home: FC<Props> = ({ history }) => {
 
   return (
     <ContentRenderer
-      hasError={!(rowsPerPageParams && pageParams)}
+      hasError={!pageParams}
       errorComponent={<Redirect to={DEFAULT_PATHNAME} />}
       contentComponent={
         <>
@@ -190,9 +177,7 @@ export const Home: FC<Props> = ({ history }) => {
           <RepositoryTable
             loading={repositoriesQuery.loading}
             repositoriesData={repositoriesData}
-            rowsPerPage={+rowsPerPageParams}
             page={+pageParams}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
             handleChangePage={handleChangePage}
           />
         </>
