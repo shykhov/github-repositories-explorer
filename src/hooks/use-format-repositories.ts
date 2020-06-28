@@ -14,28 +14,35 @@ interface RepositoryOption {
 
 interface RepositoryOptions {
   search: {
+    repositoryCount: number;
     edges: [RepositoryOption];
   };
 }
 
-interface RepositoryResult {
+export interface RepositoryResult {
   name: string;
   stars: number;
   forks: number;
 }
 
-type RepositoryResultOptions = Array<RepositoryResult>;
+export type RepositoryResultData = {
+  elements: Array<RepositoryResult>;
+  repositoryCount: number;
+};
 
-export const useFormatRepositories = (options: RepositoryOptions): RepositoryResultOptions =>
+export const useFormatRepositories = (options: RepositoryOptions): RepositoryResultData =>
   useMemo(() => {
     if (options && options.search && options.search.edges) {
-      return options.search.edges.map(
-        ({ node: { stargazers, name, forks } }: RepositoryOption): RepositoryResult => ({
-          stars: stargazers.totalCount,
-          name,
-          forks: forks.totalCount,
-        }),
-      );
+      return {
+        repositoryCount: options.search.repositoryCount,
+        elements: options.search.edges.map(
+          ({ node: { stargazers, name, forks } }: RepositoryOption): RepositoryResult => ({
+            stars: stargazers.totalCount,
+            name,
+            forks: forks.totalCount,
+          }),
+        ),
+      };
     }
-    return [];
+    return { elements: [], repositoryCount: 0 };
   }, [options]);

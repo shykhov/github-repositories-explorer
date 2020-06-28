@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, ChangeEvent, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, ChangeEvent, FC, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash/debounce';
 import { RouteComponentProps, Redirect, RouteProps } from 'react-router-dom';
@@ -10,42 +10,16 @@ import { ContentRenderer } from '../../components/content-renderer';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
 import { UserSearchSelect } from '../../components/user-search-select';
-import { prepareSearchParams } from './home.utils';
+import { prepareSearchParams, prepareQueryParams } from './home.utils';
 
 type Props = RouteComponentProps;
-
-interface UserOptions {
-  node: {
-    login: string;
-    name: string;
-    avatarUrl: string;
-  };
-}
-
-interface RepositoryOption {
-  node: {
-    stargazers: {
-      totalCount: number;
-    };
-    name: string;
-    forks: {
-      totalCount: number;
-    };
-  };
-}
 
 export interface SelectValue {
   value: string;
   label: string;
 }
 
-export interface SelectOption {
-  value: string;
-  label: string;
-  iconSrc: string;
-}
-
-export const Home: React.SFC<Props> = ({ history }) => {
+export const Home: FC<Props> = ({ history }) => {
   const query = useUrlQuery();
   const [userSearchValue, setUserSearchValue] = useState('');
   const [repositorySearchValue, setRepositorySearchValue] = useState('');
@@ -57,7 +31,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
   const searchUserValue = userSearchValue || userLoginParams;
 
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES, {
-    variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 10 },
+    variables: { queryString: `name:${repositorySearchValue}`, repositoryItemsCount: 100 },
   });
 
   const usersQuery = useQuery(FETCH_USERS, {
@@ -112,7 +86,12 @@ export const Home: React.SFC<Props> = ({ history }) => {
     });
 
     if (currentValue) {
-      getRepositories({ variables: { queryString: `name:${currentValue}`, repositoryItemsCount: 10 } });
+      getRepositories({
+        variables: {
+          queryString: prepareQueryParams({ name: currentValue, owner: userLoginParams }),
+          repositoryItemsCount: 100,
+        },
+      });
     }
   };
 
@@ -155,15 +134,30 @@ export const Home: React.SFC<Props> = ({ history }) => {
     });
   };
 
-  useEffect(() => {
-    if (repositorySearchParams || userLoginParams) {
-      getRepositories({ variables: { queryString: `name:${repositorySearchParams}`, repositoryItemsCount: 10 } });
-    }
-  }, [getRepositories]);
-
-  const repositories = useFormatRepositories(repositoriesQuery.data);
+  const repositoriesData = useFormatRepositories(repositoriesQuery.data);
 
   const userOptions = useFormatUser(usersQuery.data);
+
+  useEffect(() => {
+    if (
+      repositorySearchParams ||
+      (userLoginParams && repositoriesData.repositoryCount > +rowsPerPageParams * +pageParams)
+    ) {
+      getRepositories({
+        variables: {
+          queryString: prepareQueryParams({ name: repositorySearchParams, owner: userLoginParams }),
+          repositoryItemsCount: 100,
+        },
+      });
+    }
+  }, [
+    getRepositories,
+    userLoginParams,
+    repositorySearchParams,
+    pageParams,
+    rowsPerPageParams,
+    repositoriesData.repositoryCount,
+  ]);
 
   const userValue = useMemo(
     (): any => userOptions.find((userOption: any): any => userOption.value === userLoginParams),
@@ -191,7 +185,7 @@ export const Home: React.SFC<Props> = ({ history }) => {
           />
           <RepositoryTable
             loading={repositoriesQuery.loading}
-            repositories={repositories}
+            repositoriesData={repositoriesData}
             rowsPerPage={+rowsPerPageParams}
             page={+pageParams}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
