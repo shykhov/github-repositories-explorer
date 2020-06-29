@@ -23,7 +23,7 @@ interface RepositoryOptions {
       hasPreviousPage: boolean;
       startCursor: string;
     };
-    edges: [RepositoryOption];
+    edges: RepositoryOption[];
   };
 }
 

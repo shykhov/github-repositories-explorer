@@ -1,6 +1,6 @@
 interface UserOptions {
   search: {
-    edges: [User];
+    edges: User[];
   };
 }
 

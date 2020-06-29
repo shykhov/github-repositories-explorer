@@ -13,6 +13,12 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  env: {
+    browser: true,
+    node: true,
+    jest: true,
+    es6: true,
+  },
   rules: {
     'react/prop-types': 0,
     'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],
