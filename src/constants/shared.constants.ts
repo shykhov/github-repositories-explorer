@@ -1,5 +1,7 @@
 export const REPOSITORIES_PATHNAME = '/repositories';
 
+export const AUTHOR_GITHUB_PROFILE_URL = 'https://github.com/shykhov';
+
 export const REPOSITORIES_PER_PAGE = 50;
 
 export const DEFAULT_DEBOUNCE_TIMEOUT = 1500;

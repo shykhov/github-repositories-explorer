@@ -168,7 +168,9 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
   return (
     <Root>
       <RepositoryTable
+        error={Boolean(repositoriesQuery.error)}
         loading={repositoriesQuery.loading}
+        called={repositoriesQuery.called}
         repositoriesData={repositoriesData}
         page={page}
         handleChangePage={handleChangePage}

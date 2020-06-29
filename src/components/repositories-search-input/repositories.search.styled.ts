@@ -11,7 +11,7 @@ export const StyledPaper = styled(Paper)`
 `;
 
 export const StyledInputBase = styled(InputBase)`
-  margin-left: 22px;
+  margin-left: 41px;
   font-family: 'Lato', sans-serif;
   flex: 1;
 `;

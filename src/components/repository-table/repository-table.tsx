@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Link from '@material-ui/core/Link';
+import isEmpty from 'lodash/isEmpty';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -7,12 +8,15 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
 import { StyledTable, StyledTableContainer, StyledPaper, StyledTableCell } from './repository-table.styled';
+import { EmptyTableBody } from './empty-table-body';
 import { LoadingTableBody } from './loading-table-body';
 import { RepositoryResultData, RepositoryResult } from '../../utils';
 import { ContentRenderer } from '../content-renderer';
 import { REPOSITORIES_PER_PAGE, REPOSITORY_TABLE_COLUMNS } from '../../constants';
 
 interface Props {
+  error: boolean;
+  called: boolean;
   loading: boolean;
   repositoriesData: RepositoryResultData;
   handleChangePage(event: unknown, newPage: number): void;
@@ -20,7 +24,7 @@ interface Props {
 }
 
 export const RepositoryTable: FC<Props> = props => {
-  const { handleChangePage, page, repositoriesData, loading } = props;
+  const { handleChangePage, page, repositoriesData, loading, called, error } = props;
 
   return (
     <StyledPaper elevation={10}>
@@ -38,6 +42,8 @@ export const RepositoryTable: FC<Props> = props => {
           <TableBody>
             <ContentRenderer
               isLoading={loading}
+              isEmpty={isEmpty(repositoriesData.elements)}
+              emptyComponent={<EmptyTableBody error={error} called={called} />}
               loadingComponent={<LoadingTableBody />}
               contentComponent={
                 <>

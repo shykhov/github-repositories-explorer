@@ -8,6 +8,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
+    'prettier/react',
   ],
   parserOptions: {
     project: './tsconfig.json',
