@@ -21,8 +21,8 @@ export const FETCH_REPOSTORIES_BY_USER = gql`
   }
 `;
 export const FETCH_REPOSTORIES = gql`
-  query($queryString: String!, $after: String) {
-    search(query: $queryString, type: REPOSITORY, first: 50, after: $after) {
+  query($queryString: String!, $before: String, $after: String, $first: Int, $last: Int) {
+    search(query: $queryString, type: REPOSITORY, first: $first, last: $last, before: $before, after: $after) {
       repositoryCount
       pageInfo {
         endCursor

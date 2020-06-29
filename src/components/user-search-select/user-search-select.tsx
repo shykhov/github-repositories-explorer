@@ -1,6 +1,7 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 
-import { Select, BarWrapper } from './user-search-select.styled';
+import { Select, customSelectStyles } from './user-search-select.styled';
 import { SearchOption } from './search-option';
 
 interface InputOptions {
@@ -16,7 +17,7 @@ export interface SelectValue {
 interface SearchBarProps {
   onInputChange(): void;
   onSelectChange(user: SelectValue): void;
-  value: SelectValue;
+  value: SelectValue | undefined;
   loading: boolean;
   options: any;
 }
@@ -25,8 +26,9 @@ export const UserSearchSelect = (props: SearchBarProps) => {
   const { onInputChange, onSelectChange, value, loading, options } = props;
 
   return (
-    <BarWrapper>
+    <Paper elevation={10}>
       <Select
+        styles={customSelectStyles}
         isLoading={loading}
         value={value}
         cacheOptions
@@ -38,10 +40,10 @@ export const UserSearchSelect = (props: SearchBarProps) => {
         noOptionsMessage={({ inputValue }: InputOptions) =>
           !inputValue && !loading ? 'Type user name e.g. "Dan Abramov"' : null
         }
-        placeholder="Search for github user name..."
+        placeholder="Search for github user name"
         options={options}
         onInputChange={onInputChange}
       />
-    </BarWrapper>
+    </Paper>
   );
 };

@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 interface RepositoryOption {
   node: {
     stargazers: {
@@ -52,22 +50,21 @@ const defaultValue = {
   pageInfo: { endCursor: '', hasNextPage: false, hasPreviousPage: false, startCursor: '' },
 };
 
-export const useFormatRepositories = (options: RepositoryOptions): RepositoryResultData =>
-  useMemo(() => {
-    if (options && options.search && options.search.edges) {
-      return {
-        repositoryCount: options.search.repositoryCount,
-        pageInfo: options.search.pageInfo,
-        elements: options.search.edges.map(
-          ({ node: { stargazers, nameWithOwner, forks, url, id } }: RepositoryOption): RepositoryResult => ({
-            stars: stargazers.totalCount,
-            nameWithOwner,
-            forks: forks.totalCount,
-            url,
-            id,
-          }),
-        ),
-      };
-    }
-    return defaultValue;
-  }, [options]);
+export const formatRepositories = (options: RepositoryOptions): RepositoryResultData => {
+  if (options && options.search && options.search.edges) {
+    return {
+      repositoryCount: options.search.repositoryCount,
+      pageInfo: options.search.pageInfo,
+      elements: options.search.edges.map(
+        ({ node: { stargazers, nameWithOwner, forks, url, id } }: RepositoryOption): RepositoryResult => ({
+          stars: stargazers.totalCount,
+          nameWithOwner,
+          forks: forks.totalCount,
+          url,
+          id,
+        }),
+      ),
+    };
+  }
+  return defaultValue;
+};

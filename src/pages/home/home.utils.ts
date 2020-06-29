@@ -5,7 +5,6 @@ import isNil from 'lodash/isNil';
 interface SearchParams {
   [repositorySearchValue: string]: string | null;
   userLogin: string | null;
-  page: string | null;
 }
 
 export const prepareSearchParams = (params: SearchParams): string => {
