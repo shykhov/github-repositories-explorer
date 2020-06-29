@@ -1,3 +1,5 @@
+import { REPOSITORIES_DEFAULT_DATA } from '../constants';
+
 interface RepositoryOption {
   node: {
     stargazers: {
@@ -44,12 +46,6 @@ export type RepositoryResultData = {
   };
 };
 
-const defaultValue = {
-  elements: [],
-  repositoryCount: 0,
-  pageInfo: { endCursor: '', hasNextPage: false, hasPreviousPage: false, startCursor: '' },
-};
-
 export const formatRepositories = (options: RepositoryOptions): RepositoryResultData => {
   if (options && options.search && options.search.edges) {
     return {
@@ -66,5 +62,5 @@ export const formatRepositories = (options: RepositoryOptions): RepositoryResult
       ),
     };
   }
-  return defaultValue;
+  return REPOSITORIES_DEFAULT_DATA;
 };

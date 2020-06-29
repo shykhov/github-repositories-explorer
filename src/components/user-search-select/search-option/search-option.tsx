@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { OptionWrapper, ImageWrapper } from './search-option.styled';
+import { SelectOption } from '../../../utils';
 
-export const SearchOption = (props: any) => {
-  const { cx, innerProps, innerRef: ref, data, ...rest } = props;
+export interface Props {
+  data: SelectOption;
+  innerRef: React.Ref<HTMLDivElement>;
+  innerProps: unknown;
+}
+
+export const SearchOption: FC<Props> = props => {
+  const { innerProps, innerRef, data, ...rest } = props;
 
   return (
-    <OptionWrapper ref={ref} {...rest} {...innerProps}>
+    <OptionWrapper ref={innerRef} {...rest} {...innerProps}>
       {data && data.iconSrc && (
         <ImageWrapper>
           <img src={data.iconSrc} alt={data.label} />

@@ -14,13 +14,9 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 0,
-    '@typescript-eslint/no-unsafe-call': 0,
     'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],
-    '@typescript-eslint/no-unsafe-member-access': 0,
     'react/jsx-curly-newline': 0,
     '@typescript-eslint/unbound-method': 0,
-    '@typescript-eslint/no-unsafe-return': 0,
-    '@typescript-eslint/no-unsafe-assignment': 0,
     'eslintreact/prop-types': 0,
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['draft'] }],
     'arrow-parens': ['error', 'as-needed'],

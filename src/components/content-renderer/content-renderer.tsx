@@ -10,7 +10,7 @@ interface Props {
   contentComponent: ReactElement;
 }
 
-export const ContentRenderer = (props: Props): ReactElement => {
+export const ContentRenderer = (props: Props): ReactElement | null => {
   const { isLoading, hasError, isEmpty, loadingComponent, errorComponent, emptyComponent, contentComponent } = props;
 
   if (isLoading) {

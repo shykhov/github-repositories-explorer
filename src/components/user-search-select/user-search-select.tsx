@@ -1,28 +1,23 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Paper from '@material-ui/core/Paper';
 
+import { SelectOptions, SelectOption } from '../../utils';
 import { Select, customSelectStyles } from './user-search-select.styled';
 import { SearchOption } from './search-option';
 
-interface InputOptions {
-  inputValue?: string;
-}
+type NoOptionsCallback = {
+  inputValue: string | undefined;
+};
 
-export interface SelectValue {
-  value: string;
-  label: string;
-  iconSrc: string;
-}
-
-interface SearchBarProps {
-  onInputChange(): void;
-  onSelectChange(user: SelectValue): void;
-  value: SelectValue | undefined;
+interface Props {
+  onInputChange(inputValue?: string): void;
+  onSelectChange(user: SelectOption): void;
+  value: SelectOption | undefined;
   loading: boolean;
-  options: any;
+  options: SelectOptions;
 }
 
-export const UserSearchSelect = (props: SearchBarProps) => {
+export const UserSearchSelect: FC<Props> = props => {
   const { onInputChange, onSelectChange, value, loading, options } = props;
 
   return (
@@ -37,7 +32,7 @@ export const UserSearchSelect = (props: SearchBarProps) => {
         components={{ Option: SearchOption, SingleValue: SearchOption }}
         isClearable
         onChange={onSelectChange}
-        noOptionsMessage={({ inputValue }: InputOptions) =>
+        noOptionsMessage={({ inputValue }: NoOptionsCallback) =>
           !inputValue && !loading ? 'Type user name e.g. "Dan Abramov"' : null
         }
         placeholder="Search for github user name"

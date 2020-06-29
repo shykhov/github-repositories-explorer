@@ -1,20 +1,32 @@
 import React, { useState, useCallback, useMemo, ChangeEvent, FC, useEffect } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import debounce from 'lodash/debounce';
-import { RouteComponentProps, Redirect, RouteProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { Root, ControlsWrapper } from './home.styled';
 import { useUrlQuery } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
-import { REPOSITORIES_PATHNAME, DEFAULT_PATHNAME, REPOSITORIES_PER_PAGE } from '../../constants';
-import { generateCursor, formatRepositories, formatUsers, findCurrentUser } from '../../utils';
-import { ContentRenderer } from '../../components/content-renderer';
+import {
+  REPOSITORIES_PATHNAME,
+  REPOSITORIES_PER_PAGE,
+  DEFAULT_DEBOUNCE_TIMEOUT,
+  USER_LOGIN_PARAMETER,
+  REPOSITORY_NAME_PARAMETER,
+  REPOSITORY_NAME_QUERY_KEY,
+  DEFAULT_REPOSITORY_SORT_QUERY,
+  PAGINATION_DIRECTION,
+} from '../../constants';
+import {
+  generateCursor,
+  formatRepositories,
+  formatUsers,
+  findCurrentUser,
+  prepareQueryString,
+  prepareSearchParams,
+} from '../../utils';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
 import { UserSearchSelect } from '../../components/user-search-select';
-import { prepareSearchParams, prepareQueryParams } from './home.utils';
-
-type Props = RouteComponentProps;
 
 export interface SelectValue {
   value: string;
@@ -27,77 +39,88 @@ export interface RepositoriesVariables {
   after?: string;
 }
 
-export const Home: FC<Props> = ({ history }) => {
+export const Home: FC<RouteComponentProps> = ({ history }) => {
   const query = useUrlQuery();
-  const [userSearchValue, setUserSearchValue] = useState('');
-  const [repositorySearchValue, setRepositorySearchValue] = useState('');
+  const [userLoginSearchValue, setUserLoginSearchValue] = useState('');
+  const [repositoryNameSearchValue, setRepositoryNameSearchValue] = useState('');
   const [page, setPage] = useState(0);
 
-  const userLoginParams = query.get('userLogin');
-  const repositorySearchParams = query.get('repositorySearchValue');
+  const userLoginParameter = query.get(USER_LOGIN_PARAMETER);
+  const repositoryNameSearchParameter = query.get(REPOSITORY_NAME_PARAMETER);
 
-  const searchUserValue = userSearchValue || userLoginParams;
+  const searchUserValue = userLoginSearchValue || userLoginParameter;
 
   const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES);
 
   const usersQuery = useQuery(FETCH_USERS, {
-    variables: { name: searchUserValue, userItemsCount: 100 },
+    variables: { name: searchUserValue },
     skip: !searchUserValue,
   });
 
   const userOptions = useMemo(() => formatUsers(usersQuery.data), [usersQuery.data]);
 
-  const currentUser = useMemo(() => findCurrentUser(userOptions, userLoginParams), [userOptions, userLoginParams]);
+  const currentUser = useMemo(() => findCurrentUser(userOptions, userLoginParameter), [
+    userOptions,
+    userLoginParameter,
+  ]);
 
   const repositoriesData = useMemo(() => formatRepositories(repositoriesQuery.data), [repositoriesQuery.data]);
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (event: ChangeEvent, newPage: number) => {
     setPage(newPage);
 
     const {
       repositoryCount,
       pageInfo: { endCursor, startCursor },
     } = repositoriesData;
+    const { first, last } = PAGINATION_DIRECTION;
 
     if (newPage * REPOSITORIES_PER_PAGE + REPOSITORIES_PER_PAGE <= repositoryCount) {
       getRepositories({
         variables: {
-          queryString: prepareQueryParams({ 'in:name': repositorySearchParams, user: userLoginParams, sort: 'stars' }),
-          [newPage > page ? 'first' : 'last']: REPOSITORIES_PER_PAGE,
+          queryString: prepareQueryString({
+            [REPOSITORY_NAME_QUERY_KEY]: repositoryNameSearchParameter,
+            user: userLoginParameter,
+            ...DEFAULT_REPOSITORY_SORT_QUERY,
+          }),
+          [newPage > page ? first : last]: REPOSITORIES_PER_PAGE,
           ...generateCursor({ newPage, oldPage: page, endCursor, startCursor }),
         },
       });
     }
   };
 
-  const handleSelectInputChange: any = useCallback(
-    debounce((value: string) => {
-      if (value) {
-        setUserSearchValue(value);
-      }
-    }, 500),
+  const handleUserSelectInputChange = (userLogin: string | undefined) => {
+    if (userLogin) {
+      setUserLoginSearchValue(userLogin);
+    }
+  };
+
+  const debouncedHandleUserSelectInputChange = useCallback(
+    debounce(handleUserSelectInputChange, DEFAULT_DEBOUNCE_TIMEOUT),
     [],
   );
 
-  const handleSubmitInputSearch: any = (value: string) => {
-    const currentValue = value || repositorySearchValue;
+  const handleSubmitInputSearch = (repositoryName: string): void => {
     setPage(0);
+
+    const currentRepositoryName = repositoryName || repositoryNameSearchValue;
 
     history.push({
       pathname: REPOSITORIES_PATHNAME,
       search: prepareSearchParams({
-        repositorySearchValue: currentValue,
-        userLogin: userLoginParams,
+        [REPOSITORY_NAME_PARAMETER]: currentRepositoryName,
+        [USER_LOGIN_PARAMETER]: userLoginParameter,
       }),
     });
   };
 
-  const debouncedSubmitInputSearch: any = useCallback(debounce(handleSubmitInputSearch, 1500), [
-    userLoginParams,
-    repositorySearchParams,
+  const debouncedSubmitInputSearch = useCallback(debounce(handleSubmitInputSearch, DEFAULT_DEBOUNCE_TIMEOUT), [
+    userLoginParameter,
+    repositoryNameSearchParameter,
   ]);
 
-  const handleSearchInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchRepositoryInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     if (value) {
@@ -108,12 +131,12 @@ export const Home: FC<Props> = ({ history }) => {
       history.push({
         pathname: REPOSITORIES_PATHNAME,
         search: prepareSearchParams({
-          userLogin: userLoginParams,
+          [USER_LOGIN_PARAMETER]: userLoginParameter,
         }),
       });
     }
 
-    setRepositorySearchValue(value);
+    setRepositoryNameSearchValue(value);
   };
 
   const handleSelectChange = (user: SelectValue) => {
@@ -121,52 +144,50 @@ export const Home: FC<Props> = ({ history }) => {
     history.push({
       pathname: REPOSITORIES_PATHNAME,
       search: prepareSearchParams({
-        repositorySearchValue: repositorySearchParams,
-        userLogin: user ? user.value : '',
+        [REPOSITORY_NAME_PARAMETER]: repositoryNameSearchParameter,
+        [USER_LOGIN_PARAMETER]: user ? user.value : '',
       }),
     });
   };
 
   useEffect(() => {
-    if (repositorySearchParams || userLoginParams) {
+    if (repositoryNameSearchParameter || userLoginParameter) {
       getRepositories({
         variables: {
           first: REPOSITORIES_PER_PAGE,
-          queryString: prepareQueryParams({ 'in:name': repositorySearchParams, user: userLoginParams, sort: 'stars' }),
+          queryString: prepareQueryString({
+            [REPOSITORY_NAME_QUERY_KEY]: repositoryNameSearchParameter,
+            user: userLoginParameter,
+            ...DEFAULT_REPOSITORY_SORT_QUERY,
+          }),
         },
       });
     }
-  }, [getRepositories, userLoginParams, repositorySearchParams]);
+  }, [getRepositories, userLoginParameter, repositoryNameSearchParameter]);
 
   return (
-    <ContentRenderer
-      hasError={false}
-      errorComponent={<Redirect to={DEFAULT_PATHNAME} />}
-      contentComponent={
-        <Root>
-          <RepositoryTable
-            loading={repositoriesQuery.loading}
-            repositoriesData={repositoriesData}
-            page={page}
-            handleChangePage={handleChangePage}
-          />
-          <ControlsWrapper>
-            <RepositoriesSearchInput
-              value={repositorySearchValue || repositorySearchParams}
-              loading={repositoriesQuery.loading}
-              handleSearchInputChange={handleSearchInputChange}
-              debouncedSubmitInputSearch={debouncedSubmitInputSearch}
-            />
-            <UserSearchSelect
-              options={userOptions}
-              loading={usersQuery.loading}
-              onSelectChange={handleSelectChange}
-              onInputChange={handleSelectInputChange}
-              value={currentUser}
-            />
-          </ControlsWrapper>
-        </Root>
-      }
-    />
+    <Root>
+      <RepositoryTable
+        loading={repositoriesQuery.loading}
+        repositoriesData={repositoriesData}
+        page={page}
+        handleChangePage={handleChangePage}
+      />
+      <ControlsWrapper>
+        <RepositoriesSearchInput
+          value={repositoryNameSearchValue || repositoryNameSearchParameter}
+          loading={repositoriesQuery.loading}
+          handleSearchInputChange={handleSearchRepositoryInputChange}
+          debouncedSubmitInputSearch={debouncedSubmitInputSearch}
+        />
+        <UserSearchSelect
+          options={userOptions}
+          loading={usersQuery.loading}
+          onSelectChange={handleSelectChange}
+          onInputChange={debouncedHandleUserSelectInputChange}
+          value={currentUser}
+        />
+      </ControlsWrapper>
+    </Root>
   );
 };

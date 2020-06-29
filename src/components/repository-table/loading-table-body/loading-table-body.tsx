@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -6,7 +6,7 @@ import range from 'lodash/range';
 
 const mockData = range(10);
 
-export const LoadingTableBody = () => (
+export const LoadingTableBody: FC = () => (
   <>
     {mockData.map(() => (
       <TableRow role="checkbox">
