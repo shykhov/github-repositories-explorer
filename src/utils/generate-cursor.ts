@@ -12,6 +12,9 @@ export interface Props {
 
 export const generateCursor = (props: Props): Cursor => {
   const { newPage, oldPage, endCursor, startCursor } = props;
+  if (oldPage === 1 && newPage === 0) {
+    return {};
+  }
 
   if (newPage > oldPage) {
     return { after: endCursor };

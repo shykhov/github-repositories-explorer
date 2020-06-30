@@ -67,12 +67,11 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
   const repositoriesData = useMemo(() => formatRepositories(repositoriesQuery.data), [repositoriesQuery.data]);
 
   const handleChangePage = (event: ChangeEvent, newPage: number) => {
-    setPage(newPage);
-
     const {
       repositoryCount,
       pageInfo: { endCursor, startCursor },
     } = repositoriesData;
+
     const { first, last } = PAGINATION_DIRECTION;
 
     if (newPage * REPOSITORIES_PER_PAGE + REPOSITORIES_PER_PAGE <= repositoryCount) {
@@ -83,11 +82,13 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
             user: userLoginParameter,
             ...DEFAULT_REPOSITORY_SORT_QUERY,
           }),
-          [newPage > page ? first : last]: REPOSITORIES_PER_PAGE,
+          [newPage > page || newPage === 0 ? first : last]: REPOSITORIES_PER_PAGE,
           ...generateCursor({ newPage, oldPage: page, endCursor, startCursor }),
         },
       });
     }
+
+    setPage(newPage);
   };
 
   const handleUserSelectInputChange = (userLogin: string | undefined) => {
