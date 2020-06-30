@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UserSearchSelect /> should render UserSearchSelect 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+>
+  <Styled(StateManager)
+    cacheOptions={true}
+    components={
+      Object {
+        "Option": [Function],
+        "SingleValue": [Function],
+      }
+    }
+    isClearable={true}
+    isLoading={false}
+    isSearchable={true}
+    maxMenuHeight={200}
+    noOptionsMessage={[Function]}
+    onChange={[MockFunction]}
+    onInputChange={[MockFunction]}
+    options={
+      Array [
+        Object {
+          "iconSrc": "test-icon-1",
+          "label": "test-label-1",
+          "value": "test-value-1",
+        },
+        Object {
+          "iconSrc": "test-icon-2",
+          "label": "test-label-2",
+          "value": "test-value-2",
+        },
+      ]
+    }
+    placeholder="Search for github user name"
+    styles={
+      Object {
+        "control": [Function],
+        "input": [Function],
+        "placeholder": [Function],
+      }
+    }
+    value={
+      Object {
+        "iconSrc": "test-icon-1",
+        "label": "test-label-1",
+        "value": "test-value-1",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<UserSearchSelect /> should render UserSearchSelect with empty options 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+>
+  <Styled(StateManager)
+    cacheOptions={true}
+    components={
+      Object {
+        "Option": [Function],
+        "SingleValue": [Function],
+      }
+    }
+    isClearable={true}
+    isLoading={false}
+    isSearchable={true}
+    maxMenuHeight={200}
+    noOptionsMessage={[Function]}
+    onChange={[MockFunction]}
+    onInputChange={[MockFunction]}
+    options={
+      Array [
+        Object {
+          "iconSrc": "test-icon-1",
+          "label": "test-label-1",
+          "value": "test-value-1",
+        },
+        Object {
+          "iconSrc": "test-icon-2",
+          "label": "test-label-2",
+          "value": "test-value-2",
+        },
+      ]
+    }
+    placeholder="Search for github user name"
+    styles={
+      Object {
+        "control": [Function],
+        "input": [Function],
+        "placeholder": [Function],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<UserSearchSelect /> should render UserSearchSelect with empty value 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+>
+  <Styled(StateManager)
+    cacheOptions={true}
+    components={
+      Object {
+        "Option": [Function],
+        "SingleValue": [Function],
+      }
+    }
+    isClearable={true}
+    isLoading={false}
+    isSearchable={true}
+    maxMenuHeight={200}
+    noOptionsMessage={[Function]}
+    onChange={[MockFunction]}
+    onInputChange={[MockFunction]}
+    options={
+      Array [
+        Object {
+          "iconSrc": "test-icon-1",
+          "label": "test-label-1",
+          "value": "test-value-1",
+        },
+        Object {
+          "iconSrc": "test-icon-2",
+          "label": "test-label-2",
+          "value": "test-value-2",
+        },
+      ]
+    }
+    placeholder="Search for github user name"
+    styles={
+      Object {
+        "control": [Function],
+        "input": [Function],
+        "placeholder": [Function],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`<UserSearchSelect /> should render UserSearchSelect with true state 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+>
+  <Styled(StateManager)
+    cacheOptions={true}
+    components={
+      Object {
+        "Option": [Function],
+        "SingleValue": [Function],
+      }
+    }
+    isClearable={true}
+    isLoading={true}
+    isSearchable={true}
+    maxMenuHeight={200}
+    noOptionsMessage={[Function]}
+    onChange={[MockFunction]}
+    onInputChange={[MockFunction]}
+    options={
+      Array [
+        Object {
+          "iconSrc": "test-icon-1",
+          "label": "test-label-1",
+          "value": "test-value-1",
+        },
+        Object {
+          "iconSrc": "test-icon-2",
+          "label": "test-label-2",
+          "value": "test-value-2",
+        },
+      ]
+    }
+    placeholder="Search for github user name"
+    styles={
+      Object {
+        "control": [Function],
+        "input": [Function],
+        "placeholder": [Function],
+      }
+    }
+    value={
+      Object {
+        "iconSrc": "test-icon-1",
+        "label": "test-label-1",
+        "value": "test-value-1",
+      }
+    }
+  />
+</div>
+`;

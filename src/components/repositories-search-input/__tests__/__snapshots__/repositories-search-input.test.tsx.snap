@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RepositoriesSearchInput /> should render RepositoriesSearchInput 1`] = `
+<WithStyles(ForwardRef(Paper))
+  className="sc-AxjAm ddhvir"
+  elevation={10}
+>
+  <Styled(WithStyles(ForwardRef(InputBase)))
+    inputProps={
+      Object {
+        "aria-label": "search github repository",
+      }
+    }
+    onChange={[MockFunction]}
+    onKeyDown={[Function]}
+    placeholder="Search for repository name"
+    startAdornment={
+      <ForwardRef(Styled(WithStyles(ForwardRef(InputAdornment))))
+        position="start"
+      />
+    }
+    value="some"
+  />
+  <Styled(WithStyles(ForwardRef(IconButton)))
+    aria-label="search"
+    onClick={[Function]}
+  >
+    <SearchIcon />
+  </Styled(WithStyles(ForwardRef(IconButton)))>
+</WithStyles(ForwardRef(Paper))>
+`;

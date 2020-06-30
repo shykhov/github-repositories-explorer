@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on filters state 1`] = `
+<WithStyles(ForwardRef(TableRow))
+  className="sc-AxirZ ifBTXv"
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤬
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={null}
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            💩
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={false}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on lack of filters 1`] = `
+<WithStyles(ForwardRef(TableRow))
+  className="sc-AxirZ ifBTXv"
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🧐
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+           
+        </React.Fragment>
+      }
+      emptyComponent={null}
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            💩
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={false}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with error message 1`] = `
+<WithStyles(ForwardRef(TableRow))
+  className="sc-AxirZ ifBTXv"
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤬
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={null}
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            💩
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={true}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;

@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RepositoryTable /> should render RepositoryTable 1`] = `
+<WithStyles(ForwardRef(Paper))
+  className="sc-AxirZ hWWGFs"
+  elevation={10}
+>
+  <Styled(WithStyles(ForwardRef(TableContainer)))>
+    <Styled(WithStyles(ForwardRef(Table)))
+      aria-label="sticky table"
+      stickyHeader={true}
+    >
+      <WithStyles(ForwardRef(TableHead))>
+        <WithStyles(ForwardRef(TableRow))>
+          <Styled(WithStyles(ForwardRef(TableCell)))
+            key="nameWithOwner"
+            style={
+              Object {
+                "minWidth": 170,
+              }
+            }
+          >
+            Owner/Name
+          </Styled(WithStyles(ForwardRef(TableCell)))>
+          <Styled(WithStyles(ForwardRef(TableCell)))
+            align="center"
+            key="stars"
+            style={
+              Object {
+                "minWidth": undefined,
+              }
+            }
+          >
+            Stars
+          </Styled(WithStyles(ForwardRef(TableCell)))>
+          <Styled(WithStyles(ForwardRef(TableCell)))
+            align="center"
+            key="forks"
+            style={
+              Object {
+                "minWidth": undefined,
+              }
+            }
+          >
+            Forks
+          </Styled(WithStyles(ForwardRef(TableCell)))>
+        </WithStyles(ForwardRef(TableRow))>
+      </WithStyles(ForwardRef(TableHead))>
+      <WithStyles(ForwardRef(TableBody))>
+        <ContentRenderer
+          contentComponent={<React.Fragment />}
+          emptyComponent={
+            <EmptyTableBody
+              called={true}
+              error={false}
+            />
+          }
+          errorComponent={null}
+          hasError={false}
+          isEmpty={true}
+          isLoading={false}
+          loadingComponent={<LoadingTableBody />}
+        />
+      </WithStyles(ForwardRef(TableBody))>
+    </Styled(WithStyles(ForwardRef(Table)))>
+  </Styled(WithStyles(ForwardRef(TableContainer)))>
+  <WithStyles(ForwardRef(TablePagination))
+    component="div"
+    count={0}
+    onChangePage={[MockFunction]}
+    page={1}
+    rowsPerPage={50}
+    rowsPerPageOptions={
+      Array [
+        50,
+      ]
+    }
+  />
+</WithStyles(ForwardRef(Paper))>
+`;

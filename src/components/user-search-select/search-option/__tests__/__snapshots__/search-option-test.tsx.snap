@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SearchOption /> should render SearchOption 1`] = `
+<div
+  className="sc-AxjAm giyxjd"
+>
+  <styled.div>
+    <img
+      alt="test-label"
+      src="icon"
+    />
+  </styled.div>
+  <span>
+    test-label
+  </span>
+</div>
+`;
