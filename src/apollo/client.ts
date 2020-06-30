@@ -1,6 +1,5 @@
 import ApolloClient from 'apollo-boost';
-
-import { cache } from './fragment-matcher';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 export interface ProcessEnv {
   [REACT_APP_GH_AUTH_TOKEN: string]: string | undefined;
@@ -9,7 +8,7 @@ export interface ProcessEnv {
 const { REACT_APP_GH_AUTH_TOKEN = '' }: ProcessEnv = process.env;
 
 export const client = new ApolloClient({
-  cache,
+  cache: new InMemoryCache(),
   uri: 'https://api.github.com/graphql',
   headers: {
     Authorization: `bearer ${REACT_APP_GH_AUTH_TOKEN}`,
