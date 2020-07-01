@@ -6,7 +6,10 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
 }
 
 <WithStyles(ForwardRef(TableRow))
+  called={true}
   className="c0"
+  error={false}
+  isEmptyRepositoriesList={true}
 >
   <Styled(WithStyles(ForwardRef(TableCell)))
     align="center"
@@ -20,7 +23,21 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
             aria-label="emodji"
             role="img"
           >
-            🤬
+            🕵🏻
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
           </span>
            
           <div>
@@ -28,14 +45,13 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
           </div>
         </React.Fragment>
       }
-      emptyComponent={null}
       errorComponent={
         <React.Fragment>
           <span
             aria-label="emodji"
             role="img"
           >
-            💩
+            🙅🏻‍♂️
           </span>
           <div>
             Something went wrong. Please
@@ -52,7 +68,7 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
           </div>
         </React.Fragment>
       }
-      hasError={false}
+      hasError={true}
       isEmpty={false}
       isLoading={false}
       loadingComponent={null}
@@ -68,6 +84,8 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
 
 <WithStyles(ForwardRef(TableRow))
   className="c0"
+  error={false}
+  hasNoQueryParameters={true}
 >
   <Styled(WithStyles(ForwardRef(TableCell)))
     align="center"
@@ -81,23 +99,35 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
             aria-label="emodji"
             role="img"
           >
-            🧐
+            🕵🏻
           </span>
            
           <div>
             Enter repository name or choose github user to start our journey.
           </div>
-           
         </React.Fragment>
       }
-      emptyComponent={null}
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
       errorComponent={
         <React.Fragment>
           <span
             aria-label="emodji"
             role="img"
           >
-            💩
+            🙅🏻‍♂️
           </span>
           <div>
             Something went wrong. Please
@@ -114,7 +144,162 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
           </div>
         </React.Fragment>
       }
-      hasError={false}
+      hasError={true}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on lack of query papameters even if there are repositories 1`] = `
+.c0 {
+  height: 384px;
+}
+
+<WithStyles(ForwardRef(TableRow))
+  className="c0"
+  error={false}
+  hasNoQueryParameters={true}
+  isEmptyRepositoriesList={false}
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🕵🏻
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🙅🏻‍♂️
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={true}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on lack of query papameters even if there are repositories and called was already made 1`] = `
+.c0 {
+  height: 384px;
+}
+
+<WithStyles(ForwardRef(TableRow))
+  called={true}
+  className="c0"
+  error={false}
+  hasNoQueryParameters={true}
+  isEmptyRepositoriesList={false}
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🕵🏻
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🙅🏻‍♂️
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={true}
       isEmpty={false}
       isLoading={false}
       loadingComponent={null}
@@ -143,7 +328,21 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with error message 1`] 
             aria-label="emodji"
             role="img"
           >
-            🤬
+            🕵🏻
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
           </span>
            
           <div>
@@ -151,14 +350,90 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with error message 1`] 
           </div>
         </React.Fragment>
       }
-      emptyComponent={null}
       errorComponent={
         <React.Fragment>
           <span
             aria-label="emodji"
             role="img"
           >
-            💩
+            🙅🏻‍♂️
+          </span>
+          <div>
+            Something went wrong. Please
+             
+            <ForwardRef(WithStyles)
+              href="https://github.com/shykhov"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              contact the author
+            </ForwardRef(WithStyles)>
+             
+            of the project.
+          </div>
+        </React.Fragment>
+      }
+      hasError={true}
+      isEmpty={false}
+      isLoading={false}
+      loadingComponent={null}
+    />
+  </Styled(WithStyles(ForwardRef(TableCell)))>
+</WithStyles(ForwardRef(TableRow))>
+`;
+
+exports[`<EmptyTableBody /> should render EmptyTableBody with with error message anyway 1`] = `
+.c0 {
+  height: 384px;
+}
+
+<WithStyles(ForwardRef(TableRow))
+  called={true}
+  className="c0"
+  error={true}
+  isEmptyRepositoriesList={true}
+>
+  <Styled(WithStyles(ForwardRef(TableCell)))
+    align="center"
+    colSpan={3}
+    key="empty-data"
+  >
+    <ContentRenderer
+      contentComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🕵🏻
+          </span>
+           
+          <div>
+            Enter repository name or choose github user to start our journey.
+          </div>
+        </React.Fragment>
+      }
+      emptyComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🤷🏻‍♂️
+          </span>
+           
+          <div>
+            We couldn’t find any results. Let’s try removing some filters.
+          </div>
+        </React.Fragment>
+      }
+      errorComponent={
+        <React.Fragment>
+          <span
+            aria-label="emodji"
+            role="img"
+          >
+            🙅🏻‍♂️
           </span>
           <div>
             Something went wrong. Please

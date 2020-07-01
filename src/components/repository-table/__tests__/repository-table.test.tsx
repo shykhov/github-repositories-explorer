@@ -45,6 +45,8 @@ describe('<RepositoryTable />', () => {
 
   beforeEach(() => {
     propsMock = {
+      repositoryNameSearchParameter: 'test',
+      userLoginParameter: 'some-user',
       error: false,
       called: true,
       loading: false,

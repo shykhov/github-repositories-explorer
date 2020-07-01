@@ -11,13 +11,13 @@ export const StyledPaper = styled(Paper)`
 `;
 
 export const StyledInputBase = styled(InputBase)`
-  margin-left: 41px;
+  margin-left: 21px;
   font-family: 'Lato', sans-serif;
   flex: 1;
 `;
 
 export const StyledInputAdornment = styled(InputAdornment)`
-  max-width: 20px;
+  min-width: 20px;
 `;
 
 export const StyledIconButton = styled(IconButton)`

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import Link from '@material-ui/core/Link';
 import isEmpty from 'lodash/isEmpty';
 import TableBody from '@material-ui/core/TableBody';
@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import isNil from 'lodash/isNil';
 
 import { StyledTable, StyledTableContainer, StyledPaper, StyledTableCell } from './repository-table.styled';
 import { EmptyTableBody } from './empty-table-body';
@@ -21,10 +22,35 @@ export interface Props {
   repositoriesData: RepositoryResultData;
   handleChangePage(event: unknown, newPage: number): void;
   page: number;
+  repositoryNameSearchParameter: string | null;
+  userLoginParameter: string | null;
 }
 
 export const RepositoryTable: FC<Props> = props => {
-  const { handleChangePage, page, repositoriesData, loading, called, error } = props;
+  const {
+    handleChangePage,
+    page,
+    userLoginParameter,
+    repositoriesData,
+    loading,
+    called,
+    error,
+    repositoryNameSearchParameter,
+  } = props;
+
+  const hasNoQueryParameters: boolean = isNil(userLoginParameter) && isNil(repositoryNameSearchParameter);
+  const isEmptyRepositoriesList: boolean = isEmpty(repositoriesData.elements);
+  const totalAmount: number = useMemo((): number => {
+    if (loading) {
+      return -1;
+    }
+
+    if (hasNoQueryParameters || isEmptyRepositoriesList) {
+      return 0;
+    }
+
+    return repositoriesData.repositoryCount;
+  }, [hasNoQueryParameters, isEmptyRepositoriesList, loading, repositoriesData.repositoryCount]);
 
   return (
     <StyledPaper elevation={10}>
@@ -42,8 +68,15 @@ export const RepositoryTable: FC<Props> = props => {
           <TableBody>
             <ContentRenderer
               isLoading={loading}
-              isEmpty={isEmpty(repositoriesData.elements)}
-              emptyComponent={<EmptyTableBody error={error} called={called} />}
+              isEmpty={hasNoQueryParameters || isEmptyRepositoriesList}
+              emptyComponent={
+                <EmptyTableBody
+                  isEmptyRepositoriesList={isEmptyRepositoriesList}
+                  hasNoQueryParameters={hasNoQueryParameters}
+                  error={error}
+                  called={called}
+                />
+              }
               loadingComponent={<LoadingTableBody />}
               contentComponent={
                 <>
@@ -75,7 +108,7 @@ export const RepositoryTable: FC<Props> = props => {
         rowsPerPageOptions={[50]}
         rowsPerPage={REPOSITORIES_PER_PAGE}
         component="div"
-        count={loading ? -1 : repositoriesData.repositoryCount}
+        count={totalAmount}
         page={page}
         onChangePage={handleChangePage}
       />

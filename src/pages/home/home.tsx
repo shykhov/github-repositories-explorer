@@ -50,11 +50,11 @@ export interface HomeProps {
 
 export const Home: FC<HomeProps> = props => {
   const { getRepositories, repositoriesQuery, usersQuery, getUsers, history } = props;
-  const query = useUrlQuery();
   const [userLoginSearchValue, setUserLoginSearchValue] = React.useState('');
   const [repositoryNameSearchValue, setRepositoryNameSearchValue] = React.useState('');
   const [page, setPage] = React.useState(0);
 
+  const query = useUrlQuery();
   const userLoginParameter = query.get(USER_LOGIN_PARAMETER);
   const repositoryNameSearchParameter = query.get(REPOSITORY_NAME_QUERY_PARAMETER);
 
@@ -156,6 +156,10 @@ export const Home: FC<HomeProps> = props => {
         [USER_LOGIN_PARAMETER]: user ? user.value : '',
       }),
     });
+
+    if (user) {
+      setUserLoginSearchValue('');
+    }
   };
 
   React.useEffect(() => {
@@ -180,6 +184,8 @@ export const Home: FC<HomeProps> = props => {
         loading={repositoriesQuery.loading}
         called={repositoriesQuery.called}
         repositoriesData={repositoriesData}
+        userLoginParameter={userLoginParameter}
+        repositoryNameSearchParameter={repositoryNameSearchParameter}
         page={page}
         handleChangePage={handleChangePage}
       />

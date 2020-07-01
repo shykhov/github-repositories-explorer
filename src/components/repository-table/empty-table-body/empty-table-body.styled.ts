@@ -7,7 +7,7 @@ export const StyledTableCell = styled(TableCell)`
   font-size: 18px !important;
 
   & > span {
-    font-size: 40px;
+    font-size: 50px;
   }
 `;
 
