@@ -8,8 +8,8 @@ const mockData = range(10);
 
 export const LoadingTableBody: FC = () => (
   <>
-    {mockData.map(() => (
-      <TableRow role="checkbox">
+    {mockData.map((value: number) => (
+      <TableRow key={value} role="checkbox">
         <TableCell colSpan={3} padding="none">
           <ContentLoader foregroundColor="#BCCCDC" backgroundColor="#F0F4F8" height={49} width={1024} speed={2}>
             <rect x="0" y="0" rx="0" ry="0" width="1024" height="49" />

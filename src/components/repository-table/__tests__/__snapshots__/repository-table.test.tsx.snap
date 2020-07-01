@@ -1,80 +1,214 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<RepositoryTable /> should render RepositoryTable 1`] = `
-<WithStyles(ForwardRef(Paper))
-  className="sc-AxirZ hWWGFs"
-  elevation={10}
+.c1 {
+  max-height: 440px;
+}
+
+.c0 {
+  max-width: 800px;
+}
+
+.c3 {
+  font-weight: bold !important;
+}
+
+.c2 {
+  table-layout: fixed;
+}
+
+<div
+  class="MuiPaper-root c0 MuiPaper-elevation10 MuiPaper-rounded"
 >
-  <Styled(WithStyles(ForwardRef(TableContainer)))>
-    <Styled(WithStyles(ForwardRef(Table)))
+  <div
+    class="MuiTableContainer-root c1"
+  >
+    <table
       aria-label="sticky table"
-      stickyHeader={true}
+      class="MuiTable-root c2 MuiTable-stickyHeader"
     >
-      <WithStyles(ForwardRef(TableHead))>
-        <WithStyles(ForwardRef(TableRow))>
-          <Styled(WithStyles(ForwardRef(TableCell)))
-            key="nameWithOwner"
-            style={
-              Object {
-                "minWidth": 170,
-              }
-            }
+      <thead
+        class="MuiTableHead-root"
+      >
+        <tr
+          class="MuiTableRow-root MuiTableRow-head"
+        >
+          <th
+            class="MuiTableCell-root MuiTableCell-head c3 MuiTableCell-stickyHeader"
+            scope="col"
+            style="min-width:170px"
           >
             Owner/Name
-          </Styled(WithStyles(ForwardRef(TableCell)))>
-          <Styled(WithStyles(ForwardRef(TableCell)))
-            align="center"
-            key="stars"
-            style={
-              Object {
-                "minWidth": undefined,
-              }
-            }
+          </th>
+          <th
+            class="MuiTableCell-root MuiTableCell-head c3 MuiTableCell-alignCenter MuiTableCell-stickyHeader"
+            scope="col"
           >
             Stars
-          </Styled(WithStyles(ForwardRef(TableCell)))>
-          <Styled(WithStyles(ForwardRef(TableCell)))
-            align="center"
-            key="forks"
-            style={
-              Object {
-                "minWidth": undefined,
-              }
-            }
+          </th>
+          <th
+            class="MuiTableCell-root MuiTableCell-head c3 MuiTableCell-alignCenter MuiTableCell-stickyHeader"
+            scope="col"
           >
             Forks
-          </Styled(WithStyles(ForwardRef(TableCell)))>
-        </WithStyles(ForwardRef(TableRow))>
-      </WithStyles(ForwardRef(TableHead))>
-      <WithStyles(ForwardRef(TableBody))>
-        <ContentRenderer
-          contentComponent={<React.Fragment />}
-          emptyComponent={
-            <EmptyTableBody
-              called={true}
-              error={false}
-            />
-          }
-          errorComponent={null}
-          hasError={false}
-          isEmpty={true}
-          isLoading={false}
-          loadingComponent={<LoadingTableBody />}
-        />
-      </WithStyles(ForwardRef(TableBody))>
-    </Styled(WithStyles(ForwardRef(Table)))>
-  </Styled(WithStyles(ForwardRef(TableContainer)))>
-  <WithStyles(ForwardRef(TablePagination))
-    component="div"
-    count={0}
-    onChangePage={[MockFunction]}
-    page={1}
-    rowsPerPage={50}
-    rowsPerPageOptions={
-      Array [
-        50,
-      ]
-    }
-  />
-</WithStyles(ForwardRef(Paper))>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        class="MuiTableBody-root"
+      >
+        <tr
+          class="MuiTableRow-root MuiTableRow-hover"
+          role="checkbox"
+          tabindex="-1"
+        >
+          <td
+            class="MuiTableCell-root MuiTableCell-body"
+          >
+            <a
+              class="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"
+              href="https://github.com/ASDQWEA1/ASDQWEA1"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              ASDQWEA1/ASDQWEA1
+            </a>
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+        </tr>
+        <tr
+          class="MuiTableRow-root MuiTableRow-hover"
+          role="checkbox"
+          tabindex="-1"
+        >
+          <td
+            class="MuiTableCell-root MuiTableCell-body"
+          >
+            <a
+              class="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"
+              href="https://github.com/JFHWYFHEDY9FR7923RYBHFKDSCF/asdqweasdwaeasd"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              JFHWYFHEDY9FR7923RYBHFKDSCF/asdqweasdwaeasd
+            </a>
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+        </tr>
+        <tr
+          class="MuiTableRow-root MuiTableRow-hover"
+          role="checkbox"
+          tabindex="-1"
+        >
+          <td
+            class="MuiTableCell-root MuiTableCell-body"
+          >
+            <a
+              class="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-colorPrimary"
+              href="https://github.com/SLCDevelopment/asdqweasdqweaaa"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              SLCDevelopment/asdqweasdqweaaa
+            </a>
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+          <td
+            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter"
+          >
+            0
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="MuiTablePagination-root"
+  >
+    <div
+      class="MuiToolbar-root MuiToolbar-regular MuiTablePagination-toolbar MuiToolbar-gutters"
+    >
+      <div
+        class="MuiTablePagination-spacer"
+      />
+      <p
+        class="MuiTypography-root MuiTablePagination-caption MuiTypography-body2 MuiTypography-colorInherit"
+      >
+        1-3 of 3
+      </p>
+      <div
+        class="MuiTablePagination-actions"
+      >
+        <button
+          aria-label="Previous page"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit Mui-disabled Mui-disabled"
+          disabled=""
+          tabindex="-1"
+          title="Previous page"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+              />
+            </svg>
+          </span>
+        </button>
+        <button
+          aria-label="Next page"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit Mui-disabled Mui-disabled"
+          disabled=""
+          tabindex="-1"
+          title="Next page"
+          type="button"
+        >
+          <span
+            class="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"
+              />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 `;

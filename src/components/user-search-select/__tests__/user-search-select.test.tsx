@@ -1,11 +1,13 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { shallow, render, ShallowWrapper } from 'enzyme';
+import 'jest-styled-components';
 
-import { UserSearchSelect } from '../user-search-select';
+import { Select } from '../user-search-select.styled';
+import { UserSearchSelect, Props } from '../user-search-select';
 
 describe('<UserSearchSelect />', () => {
   let renderedComponent: ShallowWrapper;
-  let propsMock;
+  let propsMock: Props;
   const firstMockSelectValue = { value: 'test-value-1', label: 'test-label-1', iconSrc: 'test-icon-1' };
   const secondMockSelectValue = { value: 'test-value-2', label: 'test-label-2', iconSrc: 'test-icon-2' };
 
@@ -16,31 +18,39 @@ describe('<UserSearchSelect />', () => {
       value: firstMockSelectValue,
       loading: false,
       options: [firstMockSelectValue, secondMockSelectValue],
+      noOptionsMessage: 'no-options-test',
+      inputValue: 'some-value',
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     renderedComponent = shallow(<UserSearchSelect {...propsMock} />);
   });
 
   it('should render UserSearchSelect', () => {
-    expect(renderedComponent.dive().dive()).toMatchSnapshot();
+    const wrapper: unknown = render(<UserSearchSelect {...propsMock} />);
+
+    expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render UserSearchSelect with true state', () => {
+  it('should set noOptionsMessage to propsMock value if there is no inputValue and loading is false', () => {
+    expect(
+      renderedComponent.find(Select).props().noOptionsMessage({ inputValue: undefined, loading: propsMock.loading }),
+    ).toEqual(propsMock.noOptionsMessage);
+  });
+
+  it('should set noOptionsMessage to undefined if there is inputValue', () => {
+    expect(renderedComponent.find(Select).props().noOptionsMessage({ inputValue: propsMock.inputValue })).toEqual(
+      undefined,
+    );
+  });
+
+  it('should set noOptionsMessage to undefined if loading is true', () => {
     renderedComponent.setProps({ loading: true });
-
-    expect(renderedComponent.dive().dive()).toMatchSnapshot();
+    expect(renderedComponent.find(Select).props().noOptionsMessage({ loading: propsMock.loading })).toEqual(undefined);
   });
 
-  it('should render UserSearchSelect with empty value', () => {
-    renderedComponent.setProps({ value: undefined });
-
-    expect(renderedComponent.dive().dive()).toMatchSnapshot();
-  });
-
-  it('should render UserSearchSelect with empty options', () => {
-    renderedComponent.setProps({ value: undefined });
-
-    expect(renderedComponent.dive().dive()).toMatchSnapshot();
+  it('should call onSelectChange with mocked value on change event', () => {
+    renderedComponent.find(Select).simulate('change', secondMockSelectValue);
+    expect(propsMock.onSelectChange).toHaveBeenCalledTimes(1);
+    expect(propsMock.onSelectChange).toHaveBeenCalledWith(secondMockSelectValue);
   });
 });

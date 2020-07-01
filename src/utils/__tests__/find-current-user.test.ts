@@ -14,7 +14,11 @@ const usersMockOptions = [
 ];
 
 describe('findCurrentUser', () => {
-  it('should find user from options by login', (): void => {
+  it('should return user from options by login', () => {
     expect(findCurrentUser(usersMockOptions, 'asdlei99')).toEqual(usersMockOptions[0]);
+  });
+
+  it('should return undefined if there is no such login', () => {
+    expect(findCurrentUser(usersMockOptions, 'some-login')).toEqual(undefined);
   });
 });

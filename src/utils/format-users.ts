@@ -1,4 +1,6 @@
-interface UserOptions {
+import isEmpty from 'lodash/isEmpty';
+
+export interface UserOptions {
   search: {
     edges: User[];
   };
@@ -21,7 +23,7 @@ export interface SelectOption {
 export type SelectOptions = Array<SelectOption>;
 
 export const formatUsers = (options: UserOptions): SelectOptions => {
-  if (options && options.search && options.search.edges) {
+  if (options && options.search && options.search.edges && !isEmpty(options.search.edges)) {
     return options.search.edges.map(
       ({ node: { login, name, avatarUrl } }: User): SelectOption => ({
         iconSrc: avatarUrl,
@@ -30,5 +32,6 @@ export const formatUsers = (options: UserOptions): SelectOptions => {
       }),
     );
   }
+
   return [];
 };

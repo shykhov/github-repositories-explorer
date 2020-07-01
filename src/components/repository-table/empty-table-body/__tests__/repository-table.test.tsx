@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
+import 'jest-styled-components';
 
 import { EmptyTableBody } from '../empty-table-body';
 
@@ -13,7 +14,6 @@ describe('<EmptyTableBody />', () => {
       called: true,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     renderedComponent = shallow(<EmptyTableBody {...propsMock} />);
   });
 

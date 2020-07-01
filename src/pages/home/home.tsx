@@ -1,6 +1,8 @@
-import React, { useState, useCallback, useMemo, ChangeEvent, FC, useEffect } from 'react';
-import { useQuery, useLazyQuery } from '@apollo/react-hooks';
+import React, { useCallback, useMemo, ChangeEvent, FC } from 'react';
+import { useLazyQuery } from '@apollo/react-hooks';
+import { ApolloError } from 'apollo-client';
 import debounce from 'lodash/debounce';
+import { History } from 'history';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { Root, ControlsWrapper } from './home.styled';
@@ -11,7 +13,7 @@ import {
   REPOSITORIES_PER_PAGE,
   DEFAULT_DEBOUNCE_TIMEOUT,
   USER_LOGIN_PARAMETER,
-  REPOSITORY_NAME_PARAMETER,
+  REPOSITORY_NAME_QUERY_PARAMETER,
   REPOSITORY_NAME_QUERY_KEY,
   DEFAULT_REPOSITORY_SORT_QUERY,
   PAGINATION_DIRECTION,
@@ -23,39 +25,38 @@ import {
   findCurrentUser,
   prepareQueryString,
   prepareSearchParams,
+  RepositoryOptions,
+  UserOptions,
+  SelectOption,
 } from '../../utils';
 import { RepositoriesSearchInput } from '../../components/repositories-search-input';
 import { RepositoryTable } from '../../components/repository-table';
 import { UserSearchSelect } from '../../components/user-search-select';
 
-export interface SelectValue {
-  value: string;
-  label: string;
+export type ApolloLazyQueryResult<T> = {
+  data: T;
+  called: boolean;
+  error?: ApolloError | undefined;
+  loading: boolean;
+};
+
+export interface HomeProps {
+  getRepositories(variables: Record<string, unknown>): void;
+  repositoriesQuery: ApolloLazyQueryResult<RepositoryOptions>;
+  usersQuery: ApolloLazyQueryResult<UserOptions>;
+  getUsers(variables: Record<string, unknown>): void;
+  history: History;
 }
 
-export interface RepositoriesVariables {
-  queryString: string;
-  repositoryItemsCount: number;
-  after?: string;
-}
-
-export const Home: FC<RouteComponentProps> = ({ history }) => {
+export const Home: FC<HomeProps> = props => {
+  const { getRepositories, repositoriesQuery, usersQuery, getUsers, history } = props;
   const query = useUrlQuery();
-  const [userLoginSearchValue, setUserLoginSearchValue] = useState('');
-  const [repositoryNameSearchValue, setRepositoryNameSearchValue] = useState('');
-  const [page, setPage] = useState(0);
+  const [userLoginSearchValue, setUserLoginSearchValue] = React.useState('');
+  const [repositoryNameSearchValue, setRepositoryNameSearchValue] = React.useState('');
+  const [page, setPage] = React.useState(0);
 
   const userLoginParameter = query.get(USER_LOGIN_PARAMETER);
-  const repositoryNameSearchParameter = query.get(REPOSITORY_NAME_PARAMETER);
-
-  const searchUserValue = userLoginSearchValue || userLoginParameter;
-
-  const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES);
-
-  const usersQuery = useQuery(FETCH_USERS, {
-    variables: { name: searchUserValue },
-    skip: !searchUserValue,
-  });
+  const repositoryNameSearchParameter = query.get(REPOSITORY_NAME_QUERY_PARAMETER);
 
   const userOptions = useMemo(() => formatUsers(usersQuery.data), [usersQuery.data]);
 
@@ -91,26 +92,32 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
     setPage(newPage);
   };
 
-  const handleUserSelectInputChange = (userLogin: string | undefined) => {
-    if (userLogin) {
-      setUserLoginSearchValue(userLogin);
-    }
+  const getNewUsers = (userLogin: string) => {
+    getUsers({
+      variables: {
+        name: userLogin,
+      },
+    });
   };
 
-  const debouncedHandleUserSelectInputChange = useCallback(
-    debounce(handleUserSelectInputChange, DEFAULT_DEBOUNCE_TIMEOUT),
-    [],
-  );
+  const debouncedHandleUserSelectInputChange = useCallback(debounce(getNewUsers, DEFAULT_DEBOUNCE_TIMEOUT), []);
+
+  const handleUserSelectInputChange = (userLogin: string) => {
+    if (userLogin) {
+      setUserLoginSearchValue(userLogin);
+      debouncedHandleUserSelectInputChange(userLogin);
+    }
+  };
 
   const handleSubmitInputSearch = (repositoryName: string): void => {
     setPage(0);
 
-    const currentRepositoryName = repositoryName || repositoryNameSearchValue;
+    const currentRepositoryName: string = repositoryName || repositoryNameSearchValue;
 
     history.push({
       pathname: REPOSITORIES_PATHNAME,
       search: prepareSearchParams({
-        [REPOSITORY_NAME_PARAMETER]: currentRepositoryName,
+        [REPOSITORY_NAME_QUERY_PARAMETER]: currentRepositoryName,
         [USER_LOGIN_PARAMETER]: userLoginParameter,
       }),
     });
@@ -140,18 +147,18 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
     setRepositoryNameSearchValue(value);
   };
 
-  const handleSelectChange = (user: SelectValue) => {
+  const handleSelectChange = (user: SelectOption) => {
     setPage(0);
     history.push({
       pathname: REPOSITORIES_PATHNAME,
       search: prepareSearchParams({
-        [REPOSITORY_NAME_PARAMETER]: repositoryNameSearchParameter,
+        [REPOSITORY_NAME_QUERY_PARAMETER]: repositoryNameSearchParameter,
         [USER_LOGIN_PARAMETER]: user ? user.value : '',
       }),
     });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (repositoryNameSearchParameter || userLoginParameter) {
       getRepositories({
         variables: {
@@ -185,12 +192,28 @@ export const Home: FC<RouteComponentProps> = ({ history }) => {
         />
         <UserSearchSelect
           options={userOptions}
+          inputValue={userLoginSearchValue}
           loading={usersQuery.loading}
           onSelectChange={handleSelectChange}
-          onInputChange={debouncedHandleUserSelectInputChange}
+          onInputChange={handleUserSelectInputChange}
           value={currentUser}
         />
       </ControlsWrapper>
     </Root>
+  );
+};
+
+export const HomeContainer: FC<RouteComponentProps> = ({ history }) => {
+  const [getRepositories, repositoriesQuery] = useLazyQuery(FETCH_REPOSTORIES);
+  const [getUsers, usersQuery] = useLazyQuery(FETCH_USERS);
+
+  return (
+    <Home
+      history={history}
+      usersQuery={usersQuery}
+      getUsers={getUsers}
+      repositoriesQuery={repositoriesQuery}
+      getRepositories={getRepositories}
+    />
   );
 };

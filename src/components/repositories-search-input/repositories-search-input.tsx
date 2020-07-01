@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import { StyledPaper, StyledInputBase, StyledInputAdornment, StyledIconButton } from './repositories.search.styled';
 
-interface Props {
+export interface Props {
   handleSearchInputChange(event: ChangeEvent<HTMLInputElement>): void;
   loading: boolean;
   value: string | undefined;

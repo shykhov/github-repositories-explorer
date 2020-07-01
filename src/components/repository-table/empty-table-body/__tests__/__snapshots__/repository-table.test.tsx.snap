@@ -1,8 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on filters state 1`] = `
+.c0 {
+  height: 384px;
+}
+
 <WithStyles(ForwardRef(TableRow))
-  className="sc-AxirZ ifBTXv"
+  className="c0"
 >
   <Styled(WithStyles(ForwardRef(TableCell)))
     align="center"
@@ -58,8 +62,12 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
 `;
 
 exports[`<EmptyTableBody /> should render EmptyTableBody with empty message based on lack of filters 1`] = `
+.c0 {
+  height: 384px;
+}
+
 <WithStyles(ForwardRef(TableRow))
-  className="sc-AxirZ ifBTXv"
+  className="c0"
 >
   <Styled(WithStyles(ForwardRef(TableCell)))
     align="center"
@@ -116,8 +124,12 @@ exports[`<EmptyTableBody /> should render EmptyTableBody with empty message base
 `;
 
 exports[`<EmptyTableBody /> should render EmptyTableBody with error message 1`] = `
+.c0 {
+  height: 384px;
+}
+
 <WithStyles(ForwardRef(TableRow))
-  className="sc-AxirZ ifBTXv"
+  className="c0"
 >
   <Styled(WithStyles(ForwardRef(TableCell)))
     align="center"

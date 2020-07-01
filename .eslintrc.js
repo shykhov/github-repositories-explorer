@@ -19,6 +19,16 @@ module.exports = {
     jest: true,
     es6: true,
   },
+  overrides: [
+    {
+      files: ['src/**/*.test.{ts,tsx}'],
+      rules: {
+        '@typescript-eslint/no-unsafe-call': 0,
+        '@typescript-eslint/no-unsafe-member-access': 0,
+        '@typescript-eslint/no-unsafe-assignment': 0,
+      },
+    },
+  ],
   rules: {
     'react/prop-types': 0,
     'react/jsx-wrap-multilines': ['error', { declaration: false, assignment: false }],

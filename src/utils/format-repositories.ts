@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty';
+
 import { REPOSITORIES_DEFAULT_DATA } from '../constants';
 
 interface RepositoryOption {
@@ -14,7 +16,7 @@ interface RepositoryOption {
   };
 }
 
-interface RepositoryOptions {
+export interface RepositoryOptions {
   search: {
     repositoryCount: number;
     pageInfo: {
@@ -47,7 +49,7 @@ export type RepositoryResultData = {
 };
 
 export const formatRepositories = (options: RepositoryOptions): RepositoryResultData => {
-  if (options && options.search && options.search.edges) {
+  if (options && options.search && options.search.edges && !isEmpty(options.search.edges)) {
     return {
       repositoryCount: options.search.repositoryCount,
       pageInfo: options.search.pageInfo,

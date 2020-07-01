@@ -5,26 +5,32 @@ import { SelectOptions, SelectOption } from '../../utils';
 import { Select, customSelectStyles } from './user-search-select.styled';
 import { SearchOption } from './search-option';
 
-type NoOptionsCallback = {
+type NoOptionsEvent = {
   inputValue: string | undefined;
 };
 
-interface Props {
+export interface Props {
   onInputChange(inputValue?: string): void;
   onSelectChange(user: SelectOption): void;
   value: SelectOption | undefined;
   loading: boolean;
   options: SelectOptions;
+  noOptionsMessage?: string;
+  inputValue: string;
 }
 
 export const UserSearchSelect: FC<Props> = props => {
-  const { onInputChange, onSelectChange, value, loading, options } = props;
+  const { onInputChange, onSelectChange, value, loading, options, inputValue, noOptionsMessage } = props;
+
+  const generateNoOptionsMessage = (event: NoOptionsEvent): string | undefined =>
+    !event.inputValue && !loading ? noOptionsMessage : undefined;
 
   return (
     <Paper elevation={10}>
       <Select
         styles={customSelectStyles}
         isLoading={loading}
+        inputValue={inputValue}
         value={value}
         cacheOptions
         isSearchable
@@ -32,13 +38,15 @@ export const UserSearchSelect: FC<Props> = props => {
         components={{ Option: SearchOption, SingleValue: SearchOption }}
         isClearable
         onChange={onSelectChange}
-        noOptionsMessage={({ inputValue }: NoOptionsCallback) =>
-          !inputValue && !loading ? 'Type user name e.g. "Dan Abramov"' : null
-        }
+        noOptionsMessage={generateNoOptionsMessage}
         placeholder="Search for github user name"
         options={options}
         onInputChange={onInputChange}
       />
     </Paper>
   );
+};
+
+UserSearchSelect.defaultProps = {
+  noOptionsMessage: 'Type user name e.g. "Dan Abramov"',
 };

@@ -1,17 +1,19 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
+import 'jest-styled-components';
 
-import { SearchOption } from '../search-option';
+import { SearchOption, Props } from '../search-option';
 
 describe('<SearchOption />', () => {
   let renderedComponent: ShallowWrapper;
-  let propsMock;
+  let propsMock: Props;
 
   beforeEach(() => {
     propsMock = {
       data: { iconSrc: 'icon', value: 'test-value', label: 'test-label' },
       innerRef: React.createRef<HTMLDivElement>(),
       innerProps: {},
+      cx: '',
     };
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

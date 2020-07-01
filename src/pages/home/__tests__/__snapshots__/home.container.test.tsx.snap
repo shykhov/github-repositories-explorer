@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HomeContainer /> should render HomeContainer 1`] = `
+<Home
+  getRepositories={[Function]}
+  getUsers={[Function]}
+  repositoriesQuery={
+    Object {
+      "called": false,
+      "data": undefined,
+      "loading": false,
+      "networkStatus": 7,
+    }
+  }
+  usersQuery={
+    Object {
+      "called": false,
+      "data": undefined,
+      "loading": false,
+      "networkStatus": 7,
+    }
+  }
+/>
+`;

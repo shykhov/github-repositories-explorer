@@ -6,8 +6,8 @@ import { REPOSITORY_NAME_QUERY_KEY } from '../constants';
 
 interface QueryParams {
   [user: string]: string | null;
-  [REPOSITORY_NAME_QUERY_KEY]: string;
-  sort: string;
+  [REPOSITORY_NAME_QUERY_KEY]: string | null;
+  [sort: number]: string;
 }
 
 export const prepareQueryString = (params: QueryParams): string | undefined => {

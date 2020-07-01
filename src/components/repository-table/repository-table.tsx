@@ -14,7 +14,7 @@ import { RepositoryResultData, RepositoryResult } from '../../utils';
 import { ContentRenderer } from '../content-renderer';
 import { REPOSITORIES_PER_PAGE, REPOSITORY_TABLE_COLUMNS } from '../../constants';
 
-interface Props {
+export interface Props {
   error: boolean;
   called: boolean;
   loading: boolean;
@@ -50,17 +50,15 @@ export const RepositoryTable: FC<Props> = props => {
                   {repositoriesData.elements.map((repository: RepositoryResult) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={repository.id}>
                       {REPOSITORY_TABLE_COLUMNS.map(column => {
-                        const value = repository[column.id];
-                        const formattedValue =
-                          column.format && typeof value === 'number' ? column.format(value) : value;
+                        const value = `${repository[column.id]}`;
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {repository.url && column.id === 'nameWithOwner' ? (
                               <Link href={repository.url} target="_blank" rel="noopener noreferrer">
-                                {formattedValue}
+                                {value}
                               </Link>
                             ) : (
-                              formattedValue
+                              value
                             )}
                           </TableCell>
                         );

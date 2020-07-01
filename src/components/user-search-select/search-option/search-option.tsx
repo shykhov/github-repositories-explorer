@@ -7,13 +7,14 @@ export interface Props {
   data: SelectOption;
   innerRef: React.Ref<HTMLDivElement>;
   innerProps: unknown;
+  cx: string;
 }
 
 export const SearchOption: FC<Props> = props => {
-  const { innerProps, innerRef, data, ...rest } = props;
+  const { cx, innerProps, innerRef: ref, data, ...rest } = props;
 
   return (
-    <OptionWrapper ref={innerRef} {...rest} {...innerProps}>
+    <OptionWrapper ref={ref} {...rest} {...innerProps}>
       {data && data.iconSrc && (
         <ImageWrapper>
           <img src={data.iconSrc} alt={data.label} />

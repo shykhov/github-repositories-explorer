@@ -10,19 +10,19 @@ export const Select = styled(ReactSelect)`
 `;
 
 export const customSelectStyles = {
-  control: (provided: any) => ({
+  control: (provided: Record<string, unknown>): Record<string, unknown> => ({
     ...provided,
     minHeight: '48px',
     border: 'none',
     borderColor: 'transparent !important',
     boxShadow: 'none',
   }),
-  placeholder: (provided: any) => ({
+  placeholder: (provided: Record<string, unknown>): Record<string, unknown> => ({
     ...provided,
     marginLeft: '45px',
     color: 'hsl(0,0%,71%)',
   }),
-  input: (provided: any) => ({
+  input: (provided: Record<string, unknown>): Record<string, unknown> => ({
     ...provided,
     marginLeft: '45px',
   }),

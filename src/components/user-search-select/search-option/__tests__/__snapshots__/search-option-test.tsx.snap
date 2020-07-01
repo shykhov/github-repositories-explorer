@@ -1,8 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SearchOption /> should render SearchOption 1`] = `
+.c0 {
+  cursor: pointer;
+  padding: 7px 15px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0:hover {
+  background-color: #e6f2ff;
+}
+
+.c0 > span {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
 <div
-  className="sc-AxjAm giyxjd"
+  className="c0"
 >
   <styled.div>
     <img

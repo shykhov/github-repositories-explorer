@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-declare class URLSearchParams {
+export declare class URLSearchParams {
   constructor(init?: string | URLSearchParams);
 
   append(name: string, value: string): void;
