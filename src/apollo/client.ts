@@ -6,13 +6,19 @@ export interface ProcessEnv {
   [key: string]: string | undefined;
 }
 
-const { REACT_APP_JWT_TOKEN = '', REACT_APP_GH_AUTH_LOCAL_TOKEN = '' }: ProcessEnv = process.env;
+const {
+  REACT_APP_GH_AUTH_LOCAL_TOKEN = '',
+  REACT_APP_GH_AUTH_PRODUCTION_TOKEN = '',
+  NODE_ENV,
+}: ProcessEnv = process.env;
 
 export const client = new ApolloClient({
   cache,
   uri: 'https://api.github.com/graphql',
   headers: {
-    Authorization: `token ${REACT_APP_JWT_TOKEN || REACT_APP_GH_AUTH_LOCAL_TOKEN}`,
+    Authorization: `bearer ${
+      NODE_ENV === 'production' ? REACT_APP_GH_AUTH_PRODUCTION_TOKEN : REACT_APP_GH_AUTH_LOCAL_TOKEN
+    }`,
     Accept: 'application/vnd.github.machine-man-preview+json',
   },
 });
