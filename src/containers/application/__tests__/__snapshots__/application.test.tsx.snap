@@ -30,6 +30,7 @@ exports[`<Application /> should render Application 1`] = `
       path="/"
     />
     <Redirect
+      from="*"
       to="/"
     />
   </Switch>
