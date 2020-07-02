@@ -3,7 +3,7 @@
 exports[`<SearchOption /> should render SearchOption 1`] = `
 .c0 {
   cursor: pointer;
-  padding: 7px 15px;
+  padding: 7px 0 7px 15px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -12,6 +12,7 @@ exports[`<SearchOption /> should render SearchOption 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  width: 100%;
 }
 
 .c0:hover {
@@ -21,6 +22,10 @@ exports[`<SearchOption /> should render SearchOption 1`] = `
 .c0 > span {
   margin-left: 10px;
   font-size: 16px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: calc(100% - 40px);
 }
 
 <div

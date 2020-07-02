@@ -11,7 +11,7 @@ exports[`<UserSearchSelect /> should render UserSearchSelect 1`] = `
 }
 
 <div
-  class="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+  class="MuiPaper-root MuiPaper-elevation20 MuiPaper-rounded"
 >
   <div
     class="c0 css-2b097c-container"
@@ -20,7 +20,7 @@ exports[`<UserSearchSelect /> should render UserSearchSelect 1`] = `
       class=" css-1r962oo-control"
     >
       <div
-        class=" css-g1d714-ValueContainer"
+        class=" css-ti5s2q-ValueContainer"
       >
         <div
           class="css-1pyjras-Input"

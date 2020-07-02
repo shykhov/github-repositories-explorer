@@ -18,7 +18,7 @@ exports[`<RepositoryTable /> should render RepositoryTable 1`] = `
 }
 
 <div
-  class="MuiPaper-root c0 MuiPaper-elevation10 MuiPaper-rounded"
+  class="MuiPaper-root c0 MuiPaper-elevation20 MuiPaper-rounded"
 >
   <div
     class="MuiTableContainer-root c1"

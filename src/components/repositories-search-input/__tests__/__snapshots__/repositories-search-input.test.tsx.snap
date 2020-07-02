@@ -30,7 +30,7 @@ exports[`<RepositoriesSearchInput /> should inlcude spinner inside input if load
 }
 
 <div
-  class="MuiPaper-root c0 MuiPaper-elevation10 MuiPaper-rounded"
+  class="MuiPaper-root c0 MuiPaper-elevation20 MuiPaper-rounded"
 >
   <div
     class="MuiInputBase-root c1 MuiInputBase-adornedStart"
@@ -100,7 +100,7 @@ exports[`<RepositoriesSearchInput /> should render RepositoriesSearchInput 1`] =
 }
 
 <div
-  class="MuiPaper-root c0 MuiPaper-elevation10 MuiPaper-rounded"
+  class="MuiPaper-root c0 MuiPaper-elevation20 MuiPaper-rounded"
 >
   <div
     class="MuiInputBase-root c1 MuiInputBase-adornedStart"

@@ -7,11 +7,16 @@ exports[`<Home /> should render Home 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c5 {
-  width: 400px;
-  margin-left: 50px;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 0 0 50px;
 }
 
 .c5 > div:first-of-type {
@@ -71,11 +76,31 @@ exports[`<Home /> should render Home 1`] = `
   font-size: 16px;
 }
 
+@media (max-width:1200px) {
+  .c0 {
+    -webkit-flex-direction: column-reverse;
+    -ms-flex-direction: column-reverse;
+    flex-direction: column-reverse;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+}
+
+@media (max-width:1200px) {
+  .c5 {
+    margin: 0 0 30px 0;
+    max-width: 500px;
+    width: 100%;
+  }
+}
+
 <div
   class="c0"
 >
   <div
-    class="MuiPaper-root c1 MuiPaper-elevation10 MuiPaper-rounded"
+    class="MuiPaper-root c1 MuiPaper-elevation20 MuiPaper-rounded"
   >
     <div
       class="MuiTableContainer-root c2"
@@ -271,7 +296,7 @@ exports[`<Home /> should render Home 1`] = `
     class="c5"
   >
     <div
-      class="MuiPaper-root c6 MuiPaper-elevation10 MuiPaper-rounded"
+      class="MuiPaper-root c6 MuiPaper-elevation20 MuiPaper-rounded"
     >
       <div
         class="MuiInputBase-root c7 MuiInputBase-adornedStart"
@@ -309,7 +334,7 @@ exports[`<Home /> should render Home 1`] = `
       </button>
     </div>
     <div
-      class="MuiPaper-root MuiPaper-elevation10 MuiPaper-rounded"
+      class="MuiPaper-root MuiPaper-elevation20 MuiPaper-rounded"
     >
       <div
         class="c10 css-2b097c-container"
@@ -318,12 +343,12 @@ exports[`<Home /> should render Home 1`] = `
           class=" css-1r962oo-control"
         >
           <div
-            class=" css-g1d714-ValueContainer"
+            class=" css-ti5s2q-ValueContainer"
           >
             <div
               class=" css-flzki-placeholder"
             >
-              Search for github user name
+              Search for user name
             </div>
             <div
               class="css-1pyjras-Input"
