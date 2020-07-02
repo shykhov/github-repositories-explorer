@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { HomeContainer } from '../../pages/home';
-import { REPOSITORIES_PATHNAME } from '../../constants';
+import { DEFAULT_PATHNAME } from '../../constants';
 
 export const Application: FC = () => (
-  <BrowserRouter basename={process.env.PUBLIC_URL}>
+  <HashRouter hashType="noslash">
     <Switch>
-      <Route exact component={HomeContainer} path={REPOSITORIES_PATHNAME} />
-      <Redirect to={REPOSITORIES_PATHNAME} />
+      <Route exact component={HomeContainer} path={DEFAULT_PATHNAME} />
+      <Redirect to={DEFAULT_PATHNAME} />
     </Switch>
-  </BrowserRouter>
+  </HashRouter>
 );

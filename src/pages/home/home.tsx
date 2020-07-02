@@ -9,7 +9,7 @@ import { Root, ControlsWrapper } from './home.styled';
 import { useUrlQuery } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
 import {
-  REPOSITORIES_PATHNAME,
+  DEFAULT_PATHNAME,
   REPOSITORIES_PER_PAGE,
   DEFAULT_DEBOUNCE_TIMEOUT,
   USER_LOGIN_PARAMETER,
@@ -104,9 +104,9 @@ export const Home: FC<HomeProps> = props => {
 
   const handleUserSelectInputChange = (userLogin: string) => {
     if (userLogin) {
-      setUserLoginSearchValue(userLogin);
       debouncedHandleUserSelectInputChange(userLogin);
     }
+    setUserLoginSearchValue(userLogin);
   };
 
   const handleSubmitInputSearch = (repositoryName: string): void => {
@@ -115,7 +115,7 @@ export const Home: FC<HomeProps> = props => {
     const currentRepositoryName: string = repositoryName || repositoryNameSearchValue;
 
     history.push({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: prepareSearchParams({
         [REPOSITORY_NAME_QUERY_PARAMETER]: currentRepositoryName,
         [USER_LOGIN_PARAMETER]: userLoginParameter,
@@ -137,7 +137,7 @@ export const Home: FC<HomeProps> = props => {
       debouncedSubmitInputSearch.cancel();
 
       history.push({
-        pathname: REPOSITORIES_PATHNAME,
+        pathname: DEFAULT_PATHNAME,
         search: prepareSearchParams({
           [USER_LOGIN_PARAMETER]: userLoginParameter,
         }),
@@ -150,7 +150,7 @@ export const Home: FC<HomeProps> = props => {
   const handleSelectChange = (user: SelectOption) => {
     setPage(0);
     history.push({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: prepareSearchParams({
         [REPOSITORY_NAME_QUERY_PARAMETER]: repositoryNameSearchParameter,
         [USER_LOGIN_PARAMETER]: user ? user.value : '',

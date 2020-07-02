@@ -27,10 +27,10 @@ exports[`<Application /> should render Application 1`] = `
     <Route
       component={[Function]}
       exact={true}
-      path="/repositories"
+      path="/"
     />
     <Redirect
-      to="/repositories"
+      to="/"
     />
   </Switch>
 </Router>

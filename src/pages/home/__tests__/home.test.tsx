@@ -6,7 +6,7 @@ import 'jest-styled-components';
 
 import * as customHooks from '../../../hooks';
 import { Home, HomeProps } from '../home';
-import { MOCK_REPOSITORIES_DATA, MOCK_USERS_DATA, REPOSITORIES_PATHNAME } from '../../../constants';
+import { MOCK_REPOSITORIES_DATA, MOCK_USERS_DATA, DEFAULT_PATHNAME } from '../../../constants';
 
 jest.mock('../../../hooks', () => ({
   useUrlQuery: jest.fn(),
@@ -76,7 +76,7 @@ describe('<Home />', () => {
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
     expect(propsMock.history.push).toHaveBeenCalledWith({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: '?userLogin=userLogin',
     });
   });
@@ -89,7 +89,7 @@ describe('<Home />', () => {
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
     expect(propsMock.history.push).toHaveBeenCalledWith({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: '?repositoryNameSearch=some-value&userLogin=userLogin',
     });
   });
@@ -115,7 +115,7 @@ describe('<Home />', () => {
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
     expect(propsMock.history.push).toHaveBeenCalledWith({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: '?userLogin=userLogin',
     });
   });
@@ -162,7 +162,7 @@ describe('<Home />', () => {
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
     expect(propsMock.history.push).toHaveBeenCalledWith({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: '?userLogin=userLogin',
     });
   });
@@ -182,7 +182,7 @@ describe('<Home />', () => {
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
     expect(propsMock.history.push).toHaveBeenCalledWith({
-      pathname: REPOSITORIES_PATHNAME,
+      pathname: DEFAULT_PATHNAME,
       search: '?userLogin=asdlei99',
     });
   });
@@ -191,6 +191,6 @@ describe('<Home />', () => {
     shallowRenderedComponent.find('UserSearchSelect').props().onSelectChange(undefined);
 
     expect(propsMock.history.push).toHaveBeenCalledTimes(1);
-    expect(propsMock.history.push).toHaveBeenCalledWith({ pathname: REPOSITORIES_PATHNAME, search: '' });
+    expect(propsMock.history.push).toHaveBeenCalledWith({ pathname: DEFAULT_PATHNAME, search: '' });
   });
 });
