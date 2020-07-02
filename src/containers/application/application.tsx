@@ -8,7 +8,7 @@ export const Application: FC = () => (
   <HashRouter hashType="noslash">
     <Switch>
       <Route exact component={HomeContainer} path={DEFAULT_PATHNAME} />
-      <Redirect to={DEFAULT_PATHNAME} />
+      <Redirect from="*" to={DEFAULT_PATHNAME} />
     </Switch>
   </HashRouter>
 );

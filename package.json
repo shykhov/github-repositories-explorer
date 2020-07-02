@@ -104,6 +104,7 @@
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",
+    "start:dev": "PUBLIC_URL=/ react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watch",
     "eject": "react-scripts eject",
