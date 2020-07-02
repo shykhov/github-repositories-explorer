@@ -70,7 +70,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "cross-env CI=true react-app-rewired test --coverage --ci --colors"
+      "pre-push": "cross-env CI=true react-scripts test --coverage --ci --colors"
     }
   },
   "jest": {
