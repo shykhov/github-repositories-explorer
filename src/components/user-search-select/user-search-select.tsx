@@ -26,7 +26,7 @@ export const UserSearchSelect: FC<Props> = props => {
     !event.inputValue && !loading ? noOptionsMessage : undefined;
 
   return (
-    <Paper elevation={10}>
+    <Paper elevation={20}>
       <Select
         styles={customSelectStyles}
         isLoading={loading}
@@ -39,7 +39,7 @@ export const UserSearchSelect: FC<Props> = props => {
         isClearable
         onChange={onSelectChange}
         noOptionsMessage={generateNoOptionsMessage}
-        placeholder="Search for github user name"
+        placeholder="Search for user name"
         options={options}
         onInputChange={onInputChange}
       />

@@ -2,13 +2,23 @@ import styled from 'styled-components';
 
 type OptionProps = {
   isFocused?: boolean;
+  isSelected?: boolean;
 };
 
 export const OptionWrapper = styled.div<OptionProps>`
   cursor: pointer;
-  padding: 7px 15px;
+  padding: 7px 0 7px 15px;
   display: flex;
   align-items: center;
+  width: 100%;
+
+  ${({ isSelected }) =>
+    isSelected &&
+    `
+    + div {
+      margin-left: 0;
+    }
+  `}
 
   ${({ isFocused }) =>
     isFocused &&
@@ -23,6 +33,10 @@ export const OptionWrapper = styled.div<OptionProps>`
   & > span {
     margin-left: 10px;
     font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: calc(100% - 40px);
   }
 `;
 

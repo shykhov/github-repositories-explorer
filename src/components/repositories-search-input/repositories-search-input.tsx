@@ -27,7 +27,7 @@ export const RepositoriesSearchInput: FC<Props> = props => {
   };
 
   return (
-    <StyledPaper elevation={10}>
+    <StyledPaper elevation={20}>
       <StyledInputBase
         value={value}
         onChange={handleSearchInputChange}

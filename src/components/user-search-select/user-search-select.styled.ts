@@ -17,6 +17,11 @@ export const customSelectStyles = {
     borderColor: 'transparent !important',
     boxShadow: 'none',
   }),
+  valueContainer: (provided: Record<string, unknown>): Record<string, unknown> => ({
+    ...provided,
+    flexWrap: 'no-wrap',
+    minHeight: '52px',
+  }),
   placeholder: (provided: Record<string, unknown>): Record<string, unknown> => ({
     ...provided,
     marginLeft: '45px',
@@ -25,5 +30,9 @@ export const customSelectStyles = {
   input: (provided: Record<string, unknown>): Record<string, unknown> => ({
     ...provided,
     marginLeft: '45px',
+  }),
+  menu: (provided: Record<string, unknown>): Record<string, unknown> => ({
+    ...provided,
+    zIndex: 2,
   }),
 };

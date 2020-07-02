@@ -53,7 +53,7 @@ export const RepositoryTable: FC<Props> = props => {
   }, [hasNoQueryParameters, isEmptyRepositoriesList, loading, repositoriesData.repositoryCount]);
 
   return (
-    <StyledPaper elevation={10}>
+    <StyledPaper elevation={20}>
       <StyledTableContainer>
         <StyledTable stickyHeader aria-label="sticky table">
           <TableHead>
