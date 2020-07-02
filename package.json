@@ -101,7 +101,8 @@
     ]
   },
   "scripts": {
-    "predeploy": "yarn run build && cp CNAME build/CNAME",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "start:dev": "PUBLIC_URL=/ react-scripts start",
     "build": "react-scripts build",

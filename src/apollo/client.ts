@@ -13,5 +13,6 @@ export const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
   headers: {
     Authorization: `bearer ${REACT_APP_GH_AUTH_TOKEN}`,
+    Accept: 'application/vnd.github.machine-man-preview+json',
   },
 });
