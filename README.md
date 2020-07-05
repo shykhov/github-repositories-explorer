@@ -12,60 +12,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * eslint
 * material-ui
 
+## Local usage
+
+1. Utilize your GitHub account in order to [create YOUR_PERSONAL_ACCESS_TOKEN](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to be able to communicate with the GraphQL server.
+1. Install all the necessary dependencies ```yarn```. [The yarn installation guide](https://classic.yarnpkg.com/en/docs/install)
+1. Create an **.env.local** file in the root directory and declare ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN}``` variable in it, then run ```yarn start```. Another option is to run ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN} yarn start```.
+
 ## Commit message convention
 
-All the commits should follow conventional commit format. [Trello board](https://trello.com/invite/b/ONN2wfwV/2bb6be32afeeaccf77bc1cc04a93ccf5/github-repositories-explorer) which I used to track progress and generate a commit messages.
+All the commits follows conventional commit format. [Trello board](https://trello.com/invite/b/ONN2wfwV/2bb6be32afeeaccf77bc1cc04a93ccf5/github-repositories-explorer) which was used to track progress and generate a commit messages.
 
-### Format
-
-The commit message should be structured as follows:
-```
-story/story-number: Subject
-```
-
-If there's no related JIRA story: 
-```
-tech/optional-scope: Subject
-```
-
-If there's related JIRA bug:
-```
-bug/story-number: Subject
-```
-
-### Subject
-
-The subject contains a succinct description of the change:
-
-* Use the imperative mood in the subject line
-* Capitalize the subject line
-* Limit the subject line to 50 characters
-* Don't use dot (.) at the end
-
-A properly formed Git commit subject line should always be able to complete the following sentence:
-
-If applied, this commit will **your subject line here**
-For example:
-
-* If applied, this commit will **refactor subsystem X for readability**
-* If applied, this commit will **update getting started documentation**
-* If applied, this commit will **remove deprecated methods**
-* If applied, this commit will **release version 1.0.0**
-* If applied, this commit will **merge pull request #123 from user/branch**
-
-Notice how this doesn’t work for the other non-imperative forms:
-
-* If applied, this commit will ~~fixed bug with Y~~
-* If applied, this commit will ~~changing behavior of X~~
-* If applied, this commit will ~~more fixes for broken stuff~~
-* If applied, this commit will ~~sweet new API methods~~
 
 ## Available Scripts
 
 In the project directory, you can run:
 
 ### `yarn start`
-
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -80,7 +42,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ### `yarn test:coverage`
 
 Launches the test runner in the interactive mode to see actual test coverage by each file.<br>
-At this stage, the coverage for all files is more than 90%.
+![test-coverage](/public/test-coverage.png)
 
 ### `yarn build`
 

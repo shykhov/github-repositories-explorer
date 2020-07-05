@@ -19,6 +19,5 @@ export const client = new ApolloClient({
     Authorization: `bearer ${
       NODE_ENV === 'production' ? REACT_APP_GH_AUTH_PRODUCTION_TOKEN : REACT_APP_GH_AUTH_LOCAL_TOKEN
     }`,
-    Accept: 'application/vnd.github.machine-man-preview+json',
   },
 });

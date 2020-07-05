@@ -30,7 +30,7 @@ describe('<Home />', () => {
   let renderedComponent: unknown;
   let shallowRenderedComponent: ShallowWrapper;
   let propsMock: HomeProps;
-  let useUrlQuerySpy: jest.Mocked<any>;
+  let useUrlQuerySpy: jest.Mocked<unknown>;
 
   jest.spyOn(React, 'useEffect').mockImplementationOnce(f => f());
 
