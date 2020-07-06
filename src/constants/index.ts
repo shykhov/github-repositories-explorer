@@ -6,7 +6,7 @@ export * from './mock-repositories-data.constant';
 export * from './repositories-default-data.constant';
 export * from './user-login-parameter.constant';
 export * from './repositories-per-page.constant';
-export * from './dafault-pathname.constant';
+export * from './deafault-pathname.constant';
 export * from './repository-name-query-key.constant';
 export * from './repository-table-columns.constnant';
 export * from './pagination-direction.constant';

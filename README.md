@@ -1,5 +1,5 @@
 ## github-repositories-explorer
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project allows you to search github repositories by name and / or name of its owner. The purpose of the creation is to demonstrate both knowledge in the following technology stack and understanding of the approaches / structure of the application. Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Technology stack
 * react
@@ -12,16 +12,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * eslint
 * material-ui
 
+## Commit message convention
+
+[Trello board](https://trello.com/invite/b/ONN2wfwV/2bb6be32afeeaccf77bc1cc04a93ccf5/github-repositories-explorer) which was used to generate a commit messages and track progress.
+
+
 ## Local usage
 
 1. Utilize your GitHub account in order to [create YOUR_PERSONAL_ACCESS_TOKEN](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to be able to communicate with the GraphQL server.
 1. Install all the necessary dependencies ```yarn```. [The yarn installation guide](https://classic.yarnpkg.com/en/docs/install)
 1. Create an **.env.local** file in the root directory and declare ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN}``` variable in it, then run ```yarn start```. Another option is to run ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN} yarn start```.
-
-## Commit message convention
-
-All the commits follows conventional commit format. [Trello board](https://trello.com/invite/b/ONN2wfwV/2bb6be32afeeaccf77bc1cc04a93ccf5/github-repositories-explorer) which was used to track progress and generate a commit messages.
-
 
 ## Available Scripts
 
@@ -64,16 +64,23 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 * `api` 
     * `queries`
         * `repository.quires.ts`
+        * `users.queries.ts`
         * `index.ts`
 * `apollo`
     * `client.ts`
+    * `fragment-matcher.ts`
     * `index.ts`  
 * `components`
     *  `repositories-search-input`
        * `__tests__`
-       * `repositories-search-input.styled.tsx`
        * `repositories-search-input.tsx`
+       * `repositories-search-input.styled.ts`
        * `index.ts`
+* `constants`
+    * `deafault-pathname.constant.ts`
+    * `default-debounce-timeout.constant.ts`
+    * `repository-table-columns.constnant.ts`
+    * `index.ts`
 * `containers`
     * `application`
        * `__tests__`
@@ -87,7 +94,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
     * `home`
         * `__tests__`
         * `home.tsx`
-        * `home.styled.tsx`
+        * `home.styled.ts`
         * `index.ts`
 * `utils`
     * `format-repositories.ts`

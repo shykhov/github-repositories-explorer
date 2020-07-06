@@ -1,2 +1,2 @@
-export * from './repository.quires';
+export * from './repository.quiries';
 export * from './users.queries';
