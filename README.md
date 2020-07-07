@@ -1,5 +1,5 @@
 ## github-repositories-explorer
-This project allows you to search github repositories by name and / or name of its owner. The purpose of the creation is to demonstrate both knowledge in the following technology stack and understanding of the approaches / structure of the application. Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project allows you to search github repositories by name and/or name of its owner. The purpose of the creation is to demonstrate both knowledge in the following technology stack and system design strategies. Project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Technology stack
 * react
@@ -12,7 +12,7 @@ This project allows you to search github repositories by name and / or name of i
 * eslint
 * material-ui
 
-## Commit message convention
+## Commit messages convention
 
 [Trello board](https://trello.com/invite/b/ONN2wfwV/2bb6be32afeeaccf77bc1cc04a93ccf5/github-repositories-explorer) which was used to generate a commit messages and track progress.
 
