@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import { History } from 'history';
 import { RouteComponentProps } from 'react-router-dom';
 
-import { Root, ControlsWrapper } from './home.styled';
+import { Root, ControlsWrapper, StyledChart } from './home.styled';
 import { useUrlQuery } from '../../hooks';
 import { FETCH_REPOSTORIES, FETCH_USERS } from '../../api/queries';
 import {
@@ -25,7 +25,9 @@ import {
   findCurrentUser,
   prepareQueryString,
   prepareSearchParams,
+  generateChartData,
   RepositoryOptions,
+  ChartDataResult,
   UserOptions,
   SelectOption,
 } from '../../utils';
@@ -162,6 +164,10 @@ export const Home: FC<HomeProps> = props => {
     }
   };
 
+  const chartData = useMemo((): ChartDataResult[] => generateChartData(repositoriesData.elements), [
+    repositoriesData.elements,
+  ]);
+
   React.useEffect(() => {
     if (repositoryNameSearchParameter || userLoginParameter) {
       getRepositories({
@@ -178,34 +184,37 @@ export const Home: FC<HomeProps> = props => {
   }, [getRepositories, userLoginParameter, repositoryNameSearchParameter]);
 
   return (
-    <Root>
-      <RepositoryTable
-        error={Boolean(repositoriesQuery.error)}
-        loading={repositoriesQuery.loading}
-        called={repositoriesQuery.called}
-        repositoriesData={repositoriesData}
-        userLoginParameter={userLoginParameter}
-        repositoryNameSearchParameter={repositoryNameSearchParameter}
-        page={page}
-        handleChangePage={handleChangePage}
-      />
-      <ControlsWrapper>
-        <RepositoriesSearchInput
-          value={repositoryNameSearchValue || repositoryNameSearchParameter}
+    <>
+      <Root>
+        <RepositoryTable
+          error={Boolean(repositoriesQuery.error)}
           loading={repositoriesQuery.loading}
-          handleSearchInputChange={handleSearchRepositoryInputChange}
-          debouncedSubmitInputSearch={debouncedSubmitInputSearch}
+          called={repositoriesQuery.called}
+          repositoriesData={repositoriesData}
+          userLoginParameter={userLoginParameter}
+          repositoryNameSearchParameter={repositoryNameSearchParameter}
+          page={page}
+          handleChangePage={handleChangePage}
         />
-        <UserSearchSelect
-          options={userOptions}
-          inputValue={userLoginSearchValue}
-          loading={usersQuery.loading}
-          onSelectChange={handleSelectChange}
-          onInputChange={handleUserSelectInputChange}
-          value={currentUser}
-        />
-      </ControlsWrapper>
-    </Root>
+        <ControlsWrapper>
+          <RepositoriesSearchInput
+            value={repositoryNameSearchValue || repositoryNameSearchParameter}
+            loading={repositoriesQuery.loading}
+            handleSearchInputChange={handleSearchRepositoryInputChange}
+            debouncedSubmitInputSearch={debouncedSubmitInputSearch}
+          />
+          <UserSearchSelect
+            options={userOptions}
+            inputValue={userLoginSearchValue}
+            loading={usersQuery.loading}
+            onSelectChange={handleSelectChange}
+            onInputChange={handleUserSelectInputChange}
+            value={currentUser}
+          />
+        </ControlsWrapper>
+      </Root>
+      <StyledChart chartData={chartData} />
+    </>
   );
 };
 
