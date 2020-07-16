@@ -11,6 +11,7 @@ export const StyledPaper = styled(Paper)`
   width: 1250px;
   max-width: 100%;
   margin: 50px;
+  overflow: hidden;
 
   @media (max-width: 1200px) {
     min-width: 800px;

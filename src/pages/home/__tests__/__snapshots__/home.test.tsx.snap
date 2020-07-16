@@ -433,6 +433,7 @@ Array [
   width: 1250px;
   max-width: 100%;
   margin: 50px;
+  overflow: hidden;
 }
 
 @media (max-width:1200px) {

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Chart } from '../../components/chart';
+import { RepositoriesChart } from '../../components/repositories-chart';
 
 export const Root = styled.div`
   margin: 50px 50px 0 50px;
@@ -33,7 +33,7 @@ export const ControlsWrapper = styled.div`
   }
 `;
 
-export const StyledChart = styled(Chart)`
+export const StyledChart = styled(RepositoriesChart)`
   margin: 50px;
   display: flex;
   justify-content: center;

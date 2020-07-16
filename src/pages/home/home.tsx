@@ -213,7 +213,12 @@ export const Home: FC<HomeProps> = props => {
           />
         </ControlsWrapper>
       </Root>
-      <StyledChart chartData={chartData} />
+      <StyledChart
+        userLoginParameter={userLoginParameter}
+        repositoryNameSearchParameter={repositoryNameSearchParameter}
+        loading={repositoriesQuery.loading}
+        chartData={chartData}
+      />
     </>
   );
 };
