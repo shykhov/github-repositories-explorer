@@ -4,13 +4,14 @@ This project allows you to search github repositories by name and/or name of its
 ## Technology stack
 * react
 * typescript
-* apollo-grapphql
+* apollo-graphql
 * jest
 * enzyme
 * styled-components
 * prettier
 * eslint
 * material-ui
+* recharts
 
 ## Commit messages convention
 
