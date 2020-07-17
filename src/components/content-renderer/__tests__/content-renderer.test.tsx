@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 
-import { ContentRenderer } from '../content-renderer';
+import { ContentRenderer, Props } from '../content-renderer';
 
 describe('<ContentRenderer />', () => {
   let renderedComponent: ShallowWrapper;
-  let propsMock;
+  let propsMock: Props;
 
   beforeEach(() => {
     propsMock = {
@@ -18,7 +18,6 @@ describe('<ContentRenderer />', () => {
       contentComponent: <div className="content">content</div>,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     renderedComponent = shallow(<ContentRenderer {...propsMock} />);
   });
 

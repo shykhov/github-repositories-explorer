@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 
-interface Props {
+export interface Props {
   isLoading: boolean;
   hasError: boolean;
   isEmpty: boolean;

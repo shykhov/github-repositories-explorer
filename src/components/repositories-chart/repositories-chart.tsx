@@ -9,7 +9,7 @@ import { RepositoriesEmptyChart } from './repositries-empty-chart';
 import { StyledPaper, ChartWrapper } from './repositories-chart.styled';
 import { ChartDataResult } from '../../utils';
 
-interface RepositoriesChartProps {
+export interface RepositoriesChartProps {
   chartData: ChartDataResult[];
   loading: boolean;
   repositoryNameSearchParameter: string | null;

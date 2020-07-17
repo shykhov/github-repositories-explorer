@@ -1,0 +1,243 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RepositoriesChart /> should render RepositoriesChart 1`] = `
+<div
+  class="sc-AxirZ krZEiH"
+>
+  <div
+    class="MuiPaper-root sc-AxiKw dAhZML MuiPaper-elevation20 MuiPaper-rounded"
+  >
+    <div
+      class="sc-AxjAm ccOLpk"
+    >
+      <span
+        aria-label="emodji"
+        role="img"
+      >
+        📉
+      </span>
+      <div>
+        Repositories informational chart will appear here.
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<RepositoriesChart /> should shallow render RepositoriesChart 1`] = `
+<styled.div>
+  <Styled(WithStyles(ForwardRef(Paper)))
+    elevation={20}
+  >
+    <ContentRenderer
+      contentComponent={
+        <ResponsiveContainer
+          debounce={0}
+          height={492}
+          width="100%"
+        >
+          <LineChart
+            barCategoryGap="10%"
+            barGap={4}
+            layout="horizontal"
+            margin={
+              Object {
+                "bottom": 50,
+                "left": 30,
+                "right": 30,
+                "top": 50,
+              }
+            }
+            reverseStackOrder={false}
+            stackOffset="none"
+          >
+            <CartesianGrid
+              fill="none"
+              horizontal={true}
+              horizontalFill={Array []}
+              horizontalPoints={Array []}
+              stroke="#ccc"
+              strokeDasharray="3 3"
+              vertical={true}
+              verticalFill={Array []}
+              verticalPoints={Array []}
+            />
+            <XAxis
+              allowDataOverflow={false}
+              allowDecimals={true}
+              allowDuplicatedCategory={true}
+              dataKey="name"
+              domain={
+                Array [
+                  0,
+                  "auto",
+                ]
+              }
+              height={30}
+              hide={true}
+              mirror={false}
+              orientation="bottom"
+              padding={
+                Object {
+                  "left": 0,
+                  "right": 0,
+                }
+              }
+              reversed={false}
+              scale="auto"
+              tickCount={5}
+              type="category"
+              width={0}
+              xAxisId={0}
+            />
+            <YAxis
+              allowDataOverflow={false}
+              allowDecimals={true}
+              allowDuplicatedCategory={true}
+              domain={
+                Array [
+                  0,
+                  "auto",
+                ]
+              }
+              height={0}
+              hide={false}
+              mirror={false}
+              orientation="left"
+              padding={
+                Object {
+                  "bottom": 0,
+                  "top": 0,
+                }
+              }
+              reversed={false}
+              scale="auto"
+              tickCount={5}
+              type="number"
+              width={60}
+              yAxisId="left"
+            />
+            <YAxis
+              allowDataOverflow={false}
+              allowDecimals={true}
+              allowDuplicatedCategory={true}
+              domain={
+                Array [
+                  0,
+                  "auto",
+                ]
+              }
+              height={0}
+              hide={false}
+              mirror={false}
+              orientation="right"
+              padding={
+                Object {
+                  "bottom": 0,
+                  "top": 0,
+                }
+              }
+              reversed={false}
+              scale="auto"
+              tickCount={5}
+              type="number"
+              width={60}
+              yAxisId="right"
+            />
+            <Tooltip
+              active={false}
+              allowEscapeViewBox={
+                Object {
+                  "x": false,
+                  "y": false,
+                }
+              }
+              animationDuration={400}
+              animationEasing="ease"
+              contentStyle={Object {}}
+              coordinate={
+                Object {
+                  "x": 0,
+                  "y": 0,
+                }
+              }
+              cursor={true}
+              cursorStyle={Object {}}
+              filterNull={true}
+              isAnimationActive={true}
+              itemStyle={Object {}}
+              labelStyle={Object {}}
+              offset={10}
+              separator=" : "
+              useTranslate3d={false}
+              viewBox={
+                Object {
+                  "x1": 0,
+                  "x2": 0,
+                  "y1": 0,
+                  "y2": 0,
+                }
+              }
+              wrapperStyle={Object {}}
+            />
+            <Line
+              activeDot={
+                Object {
+                  "r": 8,
+                }
+              }
+              animateNewValues={true}
+              animationBegin={0}
+              animationDuration={1500}
+              animationEasing="ease"
+              connectNulls={false}
+              dataKey="stars"
+              dot={true}
+              fill="#fff"
+              hide={false}
+              isAnimationActive={true}
+              legendType="line"
+              onAnimationEnd={[Function]}
+              onAnimationStart={[Function]}
+              points={Array []}
+              stroke="#8884d8"
+              strokeWidth={1}
+              type="monotone"
+              xAxisId={0}
+              yAxisId="left"
+            />
+            <Line
+              activeDot={true}
+              animateNewValues={true}
+              animationBegin={0}
+              animationDuration={1500}
+              animationEasing="ease"
+              connectNulls={false}
+              dataKey="forks"
+              dot={true}
+              fill="#fff"
+              hide={false}
+              isAnimationActive={true}
+              legendType="line"
+              onAnimationEnd={[Function]}
+              onAnimationStart={[Function]}
+              points={Array []}
+              stroke="#82ca9d"
+              strokeWidth={1}
+              type="monotone"
+              xAxisId={0}
+              yAxisId="right"
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      }
+      emptyComponent={<RepositoriesEmptyChart />}
+      errorComponent={null}
+      hasError={false}
+      isEmpty={true}
+      isLoading={false}
+      loadingComponent={<RepositoriesLoadingChart />}
+    />
+  </Styled(WithStyles(ForwardRef(Paper)))>
+</styled.div>
+`;
