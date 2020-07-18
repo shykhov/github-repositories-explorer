@@ -12,6 +12,7 @@ This project allows you to search github repositories by name and/or name of its
 * eslint
 * material-ui
 * recharts
+* docker
 
 ## Commit messages convention
 
