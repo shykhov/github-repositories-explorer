@@ -22,8 +22,25 @@ This project allows you to search github repositories by name and/or name of its
 ## Local usage
 
 1. Utilize your GitHub account in order to [create YOUR_PERSONAL_ACCESS_TOKEN](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to be able to communicate with the GraphQL server.
-1. Install all the necessary dependencies ```yarn```. [The yarn installation guide](https://classic.yarnpkg.com/en/docs/install)
-1. Create an **.env.local** file in the root directory and declare ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN}``` variable in it, then run ```yarn start```. Another option is to run ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN} yarn start```.
+1. Create an **.env.local** file in the root directory and declare ```REACT_APP_GH_AUTH_LOCAL_TOKEN={YOUR_PERSONAL_ACCESS_TOKEN}``` variable in it.
+1. You can run apllication directly or utilize docker.
+    * Directly:
+        1. Install all the necessary dependencies: ```yarn```. [The yarn installation guide](https://classic.yarnpkg.com/en/docs/install).
+        1. Run: ```yarn start```. 
+        1. Open your browser to http://localhost:3000 and you should see the app.
+    * Docker:
+        1. [Install Docker](https://docs.docker.com/get-docker/)
+        1. Build and tag the Docker image: ```docker build -t sample:dev .```
+        1. Then, spin up the container once the build is done: ```docker run \
+        -it \
+        --rm \
+        -v ${PWD}:/app \
+        -v /app/node_modules \
+        -p 3001:3000 \
+        -e CHOKIDAR_USEPOLLING=true \
+        sample:dev```
+        1. Open your browser to http://localhost:3001 and you should see the app.
+
 
 ## Available Scripts
 
