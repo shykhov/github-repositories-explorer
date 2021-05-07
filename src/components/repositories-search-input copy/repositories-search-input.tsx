@@ -1,5 +1,6 @@
 import React, { ChangeEvent, KeyboardEvent, FC } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 import SearchIcon from '@material-ui/icons/Search';
 
 import { StyledPaper, StyledInputBase, StyledInputAdornment, StyledIconButton } from './repositories.search.styled';
@@ -14,7 +15,8 @@ export interface Props {
 }
 
 export const RepositoriesSearchInput: FC<Props> = props => {
-  const { handleSearchInputChange, debouncedSubmitInputSearch, loading, value } = props;
+  const { handleSearchInputChange, debouncedSubmitInputSearch,
+    loading, value } = props;
 
   const submitSearch = () => {
     debouncedSubmitInputSearch.flush(value);
@@ -32,7 +34,7 @@ export const RepositoriesSearchInput: FC<Props> = props => {
         value={value}
         onChange={handleSearchInputChange}
         onKeyDown={handleEnterKeyPress}
-        placeholder="Search for repository name"
+        placeholder='Search for repository name'
         startAdornment={
           <StyledInputAdornment position="start">
             {loading && value && <CircularProgress size={20} />}
