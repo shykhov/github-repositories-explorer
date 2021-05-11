@@ -112,7 +112,8 @@
     "eject": "react-scripts eject",
     "test:coverage": "cross-env CI=true react-scripts test --coverage --ci --colors",
     "prettier": "prettier --write  '**/*.{ts,tsx,js,jsx}'",
-    "eslint": "eslint --fix --ignore-path .gitignore --ignore-pattern internals '**/*.{ts,tsx,js,jsx}'"
+    "eslint": "eslint --fix --ignore-path .gitignore --ignore-pattern internals '**/*.{ts,tsx,js,jsx}'",
+    "eslint:check": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "eslintConfig": {
     "extends": "react-app"
