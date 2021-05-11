@@ -10,14 +10,15 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier/react',
   ],
-  parserOptions: {
-    project: './tsconfig.json',
-  },
   env: {
     browser: true,
     node: true,
     jest: true,
     es6: true,
+  },
+  parserOptions: {
+    project: './tsconfig.json', // Specify it only for TypeScript files
+    createDefaultProgram: true,
   },
   overrides: [
     {
